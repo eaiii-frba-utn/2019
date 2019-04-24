@@ -1,0 +1,389 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.1'
+      jupytext_version: 1.1.1
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy                  # http://scipy.org/
+from scipy import signal
+from numpy import pi
+
+from IPython.display import Image  
+
+from scipy.fftpack import fft, fftfreq
+from time import time
+
+# %matplotlib inline
+params = {'legend.fontsize': 16,
+          'figure.figsize': (10, 8),
+         'axes.labelsize': 16,
+         'axes.titlesize': 16,
+         'xtick.labelsize':16,
+         'ytick.labelsize':16}
+plt.rcParams.update(params) 
+
+```
+
+<!-- #region -->
+## Serie de Fourier
+
+
+Si $f(t)$  es una función de variable real $t$, que es integrable en el intervalo $[t_0-T/2,t_0+T/2]\,$  entonces se puede obtener el desarrollo en serie de Fourier de $f(t)\,$ en ese intervalo. 
+Fuera del intervalo la serie es periódica, con período $T\,$. 
+
+Si $f(t)$ es periódica en toda la recta real, la aproximación por series de Fourier también será válida en todos los valores de $t\,$. 
+
+### Serie de Fourier trigonometrica
+
+Luego la serie de Fourier asociada a $f(t)\,$ es:
+
+$$f(t) \sim \frac{a_0}{2} + \sum_{n=1}^\infty\left[a_n\cos \left( \frac{2n\pi}{T}t \right) + b_n\sin \left( \frac{2n\pi}{T}t \right) \right]$$
+
+Donde $a_0$, $a_n$ y $b_n$ son los coeficientes de la serie de Fourier que toman los valores:
+
+$$ a_0 = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}}  f(t) dt $$
+
+$$ a_n = \frac{2}{T} \int_{-T/2}^{T/2}  f(t) \cos \left( \frac{2n \pi}{T} t \right) dt$$
+
+$$ b_n = \frac{2}{T} \int_{-T/2}^{T/2}  f(t) \sin \left(\frac{2n\pi}{T}t\right) dt$$
+
+
+### Serie de Fourier exponencial
+Por la identidad de Euler, las fórmulas de arriba pueden expresarse también en su forma compleja:
+
+$$ f(t) \sim \sum_{n=-\infty}^{\infty} c_{n}\,e^{2\pi i\frac{n}{T}t}.$$
+
+Los coeficientes ahora serían:
+
+$$c_n=\frac{1}{T}\int_{-T/2}^{T/2} f(t)\,e^{-2\pi i\frac {n}{T}t}\,dt.$$
+
+Otra forma de definir la serie de Fourier es:
+
+$$f(t) = \frac{a_0}{2} + \sum_{n=1}^\infty\left(a_n\cos{{\omega_n}{t}} + b_n\sin{{\omega_n}{t}}\right)$$
+
+donde
+$\omega_n=n\omega$
+y
+$\omega=2{\pi}f=\frac{2{\pi}}{T}$
+
+siendo:
+
+$$ a_0 = \frac{2}{T} \int_{t_0}^{t_0+T}  f(t) dt$$
+
+$$ a_n = \frac{2}{T} \int_{t_0}^{t_0+T}  f(t) \cos{{\omega_n}{t}} dt$$ 
+
+$$ b_n=\frac{2}{T} \int_{t_0}^{t_0+T} f(t) \sin {{\omega_n}{t}} dt$$
+
+
+
+### Euler's formula:
+$$ e^{ i \theta} = cos(\theta) + i \cdot sin(\theta)$$
+
+
+
+<!-- #endregion -->
+
+<!-- #region -->
+### Serie de Fourier exponencial discreta
+
+Sea x(n) una señal aperiódica discreta en el tiempo, la transformada discreta de Fourier (DFT) de esta señal se define como:
+
+$$X[k]= \sum_{n=0}^{N-1} x[n]\,e^{-j 2\pi n \frac{k}{N}}$$
+
+en la cual X(k) es un conjunto de números complejos. 
+
+La evaluación directa de esa fórmula requiere $N^{2}$ operaciones aritméticas, pero con un algoritmo FFT se puede obtener el mismo resultado con sólo $N log N$ operaciones.
+
+
+$$x[n] = \frac{1}{N} \sum_{k=0}^{N-1} X[k]\cdot e^{i 2 \pi k \frac{n}{N}}$$
+<!-- #endregion -->
+
+```{python}
+# Estas funciones calculas las componentes de la serie de Fourier para una senal dada
+# A cada función se pasa como argumento la señal x y el numero de armonico a calcular.
+# El muestreo se define por la cantidad de muestras dentro del periodo de la señal x.
+
+
+# Transformada Discreta de Fourier     
+def DFT(x):
+    N = len(x)
+    print(N)
+    X = list()
+    for k in range(N):
+        X.append( sum([s*np.exp(-2j*np.pi*n*k/N) for n,s in enumerate(x)]))
+    return np.array(X)  
+    
+
+
+# Transformada Inversa Discreta de Fourier       
+def IDFT(X):
+    N = len(X)
+    x = list()
+    for n in range(N):
+        x.append( sum([S*np.exp(2j*np.pi*k*n/N) for k,S in enumerate(X)]))
+    return np.array(x)/N  
+
+
+
+    
+def freq(X, fs):
+    N =  len(X)
+    fo = np.arange(0,N/2,1) *fs/ N
+    fo = np.append(fo,np.arange(-N/2,0,1) *fs/N )
+    return fo
+
+def tim(x, fs):
+    return np.arange(0,len(x),1) /fs
+    
+```
+
+### A continuación se define la función de la señal en función del tiempo. 
+
+```{python}
+# Parametros de la señal
+N  = 64        # Número de bines por traza
+f  = 100.0     # Hz
+fs = f * 8     # muestreo
+dt = 1 / (fs)  # Espaciado (puntos por período)
+
+
+# Vector tiempo
+# np.linspace( inicio, fin, paso)
+t  = np.linspace(0, (N - 1) * dt, N)  # Intervalo de tiempo en segundos 
+
+
+# Señal
+y = np.sin(2 * pi * f * t) - 0.5 * np.sin(2 * pi * 2 * f * t)  # Señal
+
+
+
+```
+
+```{python}
+## PLOT 
+plt.plot(t, y)
+plt.plot(t, y, 'ko')
+plt.xlabel('$Tiempo/s$')
+plt.ylabel('$y(t)$')
+plt.show()
+```
+
+## Cálculo del espectro empleando la funciones propias.
+
+Se mide el tiempo de computo de la función con fines de comparación. 
+
+```{python}
+# Serie de Fourier Exponencial
+# la separacion de las deltas = 1/T 
+
+start_time = time()
+
+Y    = DFT(y) / len(y)
+
+elapsed_time = time() - start_time
+print("Elapsed time: %.10f seconds." % elapsed_time)
+
+
+
+#plt.stem( freq(y,fs) , np.abs(Y))
+plt.plot( np.abs(Y)[len(y) -8],'x')
+plt.ylabel('c')
+plt.xlabel('freq')
+plt.ylim(-0.1, 0.8)
+plt.grid()
+plt.show()
+
+```
+
+```{python}
+yo    = IDFT(Y)
+
+
+plt.plot(tim(yo,fs), yo)
+plt.plot(tim(yo,fs), yo,'o')
+
+plt.ylabel('yo')
+plt.xlabel('time')
+
+plt.grid()
+plt.show()
+
+```
+
+## Calculo del espectro empleando la funciones de scipy.fftpack  (fft, fftfreq)
+
+Se emplea mide el tiempo de computo de la función con fines de comparación. 
+
+```{python}
+# se guarda el tiempo de inicio 
+start_time = time()
+ 
+Y = fft(y) / len(y)  # Normalizada
+
+elapsed_time = time() - start_time
+print("Elapsed time: %.10f seconds." % elapsed_time)
+
+frq = fftfreq(len(y), dt)  # Recuperamos las frecuencias
+
+plt.stem(frq, np.abs(Y) )  # Representamos la parte imaginaria
+plt.ylim(-0.1, 0.8)
+plt.xlabel('$Frecuencia/Hz$')
+plt.ylabel('$Abs(Y)$')
+plt.grid()
+plt.show()
+```
+
+## Spectral leakage
+
+Cuando se calcula la transformada discreta de Fourier (DFT) de una señal (por ejemplo, para obtener la densidad espectral de potencia), el manchado espectral o leakage ocurrirá si alguna de las componentes frecuenciales cae entre frecuencias de referencia.
+
+El leakage también tiene lugar cuando se calcula la DFT de una señal que contiene el resto de un ciclo. Por ejemplo, si una onda senoidal de 3 Hz se muestrea durante 0.9 segundos, se produce una discontinuidad, la cual causa un manchado espectral. 
+
+
+```{python}
+N2  = 44        # Número de bines
+f  = 100.0     # Hz
+fs = f * 8     # muestreo
+dt = 1 / (fs)  # Espaciado (puntos por período)
+
+# np.linspace( inicio, fin, paso)
+t2  = np.linspace(0, (N2 - 1) * dt, N2)  # Intervalo de tiempo en segundos 
+
+y2 = np.sin(2 * pi * f * t2) - 0.5 * np.sin(2 * pi * 2 * f * t2)  # Señal
+
+plt.plot(t2, y2)
+plt.plot(t2, y2, 'ko')
+plt.xlabel('Tiempo (s)')
+plt.ylabel('$y(t)$')
+plt.show()
+
+start_time = time()
+Y2 = fft(y2) / N2  # Normalizada
+
+elapsed_time = time() - start_time
+print("Elapsed time: %.10f seconds." % elapsed_time)
+
+frq2 = fftfreq(N2, dt)  # Recuperamos las frecuencias
+
+plt.stem(frq2, np.abs(Y2) )  # Representamos la parte imaginaria
+plt.ylim(-0.1, 1.4)
+plt.xlabel('Frecuencia (Hz)')
+plt.ylabel('Abs($Y$)')
+plt.grid()
+plt.show()
+```
+
+<!-- #region -->
+## Zero Padding
+
+
+Zero padding es una tecnica empleada con el objetivo de tener ventanas con numeros de bines multiplos de 2. Para ello se agregan ceros al final de la muestra.
+<!-- #endregion -->
+
+```{python}
+N3 = 128         # Número de bines
+Nz = 80
+f  = 100.0     # Hz
+fs = f * 8     # muestreo
+dt = 1 / (fs)  # Espaciado (puntos por período)
+
+# np.linspace( inicio, fin, paso)
+t3  = np.linspace(0, (N3 - 1) * dt, N3)  # Intervalo de tiempo en segundos 
+
+y3 = np.sin(2 * pi * f * t3[:-Nz]) - 0.5 * np.sin(2 * pi * 2 * f * t3[:-Nz])  # Señal
+print(len(y3))
+y3 =  np.append(y3,np.zeros(Nz) )
+
+
+plt.plot(t3, y3)
+plt.plot(t3, y3, 'ko')
+plt.xlabel('Tiempo (s)')
+plt.ylabel('$y(t)$')
+plt.show()
+
+start_time = time()
+Y3 = fft(y3) / N3  # Normalizada
+
+elapsed_time = time() - start_time
+print("Elapsed time: %.10f seconds." % elapsed_time)
+
+frq3 = fftfreq(N3, dt)  # Recuperamos las frecuencias
+
+plt.stem(frq3, np.abs(Y3) )  # Representamos la parte imaginaria
+plt.ylim(-0.1, 0.8)
+plt.xlabel('Frecuencia (Hz)')
+plt.ylabel('Abs($Y$)')
+plt.grid()
+plt.show()
+```
+
+<!-- #region -->
+## Ventanas 
+
+Existe una manera de reducir la fuga y es mediante el uso de funciones ventana. Las funciones ventana no son más que funciones que valen cero fuera de un cierto intervalo, y que en procesamiento de señales digitales se utilizan para «suavizar» o filtrar una determinada señal. NumPy trae unas cuantas funciones ventana por defecto; por ejemplo, la ventana de Blackman tiene este aspecto
+
+
+Como se puede ver, en los extremos del intervalo es nula. Las funciones ventana reciben un único argumento que es el número de puntos. Si multiplicamos la ventana por la señal, obtenemos una nueva señal que vale cero en los extremos. Comprobemos el resultado, representando ahora el espectro de amplitud y comparando cómo es el resultado si aplicamos o no la ventana de Blackman.
+<!-- #endregion -->
+
+```{python}
+M = 128         # Número de bines
+
+f  = 100.0     # Hz
+fs = f * 8     # muestreo
+dt = 1 / (fs)  # Espaciado (puntos por período)
+
+# np.linspace( inicio, fin, paso)
+t4  = np.linspace(0, (M - 1) * dt, M)  # Intervalo de tiempo en segundos 
+
+y4 = np.sin(2 * pi * f * t4) - 0.5 * np.sin(2 * pi * 2 * f * t4)  # Señal
+
+
+#y4 = y4 * np.bartlett(M)
+#y4 = y4 * np.blackman(M) 
+y4 = y4 * np.hamming(M) 
+#y4 = y4 * np.hanning(M) 
+#y4 = y4 * np.kaiser(M, 10) 
+
+
+
+plt.plot(t4, y4)
+plt.plot(t4, y4, 'ko')
+plt.xlabel('Tiempo (s)')
+plt.ylabel('$y(t)$')
+plt.show()
+
+start_time = time()
+Y4 = fft(y4) / M  # Normalizada
+
+elapsed_time = time() - start_time
+print("Elapsed time: %.10f seconds." % elapsed_time)
+
+frq4 = fftfreq(M, dt)  # Recuperamos las frecuencias
+
+plt.stem(frq4, np.abs(Y4) )  # Representamos la parte imaginaria
+plt.ylim(-0.1, .8)
+plt.xlabel('Frecuencia (Hz)')
+plt.ylabel('Abs($Y$)')
+plt.grid()
+plt.show()
+```
+
+```{python}
+
+```
+
+```{python}
+
+```

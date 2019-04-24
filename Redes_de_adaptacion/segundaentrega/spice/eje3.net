@@ -1,0 +1,24 @@
+* Z:\home\aalmela\scm\git\utn\eaiii\2019\Redes_de_adaptacion\segundaentrega\spice\eje3.asc
+RL1 ant 0 {RL}
+Cg N001 0 {cg} Rser=0
+L1 N001 0 {L} Rser=0
+rg N001 0 {rg}
+I1 0 N001 AC {ig}
+C1 N001 ant {C1} Rser=0
+C2 ant 0 {C2} Rser=0
+rp N001 0 {rp}
+I2 0 N002 AC {ig}
+R1 N002 0 {rg}
+R2 N002 0 {rg}
+R3 N002 0 {rp}
+.ac dec 1000000 3e6 5e6
+.param RL  =  100.0 
+.param C1 =  2.643e-10 
+.param C2 =  2.083e-09 
+.param L  =  6.4458e-06 
+.param rp  =  16200.00 
+.param rg  =  8100.00 
+.param cg  =  1.00e-11 
+.param ig  =  1.00e-05
+.backanno
+.end

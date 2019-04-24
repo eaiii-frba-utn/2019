@@ -1,0 +1,21 @@
+* Z:\home\aalmela\scm\git\utn\eaiii\2019\Redes_de_adaptacion\segundaentrega\spice\eje2para.asc
+Rant N004 0 {rant}
+C1 N001 N003 {C} Rser=0
+L1 N001 N002 {L} Rser=0
+rpc1 N003 0 {rpcs}
+rpl Vant N002 {rpls}
+R2 N001 0 {rg}
+I1 0 N001 SINE(0 4 2e6) AC {ig}
+Cant Vant N004 {cant}
+;tran 0 40u 30u uic
+.param rant  =  2.0 
+.param cant  =  3.0e-11 
+.param C =  7.797e-09 
+.param rpcs  =  0.200 
+.param L  =  2.1187e-04 
+.param rpls  = 1.000 
+.param rg  =  50.00 
+.param ig  =  4.00
+.tran 0 34u 30u uic
+.backanno
+.end
