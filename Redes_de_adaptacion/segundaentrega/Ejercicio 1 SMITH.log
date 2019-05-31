@@ -1,0 +1,1360 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=latex 2018.11.20)  25 APR 2019 01:22
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**"Ejercicio 1 SMITH.ipynb"
+(./Ejercicio 1 SMITH.ipynb
+LaTeX2e <2017-04-15>
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2  "
+      cells": [
+? 
+Missing character: There is no " in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no " in font nullfont!
+Missing character: There is no : in font nullfont!
+Missing character: There is no [ in font nullfont!
+Missing character: There is no " in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no l in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.4    "cell_
+             type": "code",
+? 
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 4.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 4.
+! Undefined control sequence.
+l.9     "import numpy as np\n
+                             ",
+? 
+! Undefined control sequence.
+l.10     "import matplotlib.pyplot as plt\n
+                                           ",
+? 
+! Undefined control sequence.
+l.11     "\n
+            ",
+? 
+! Undefined control sequence.
+l.12     "\n
+            ",
+? 
+! Undefined control sequence.
+l.13     "\n
+            ",
+? 
+! Undefined control sequence.
+l.14     "from pylab import *\n
+                               ",
+? 
+! Undefined control sequence.
+l.15     "\n
+            ",
+? 
+! Undefined control sequence.
+l.16     "\n
+            ",
+? 
+! Undefined control sequence.
+l.17 ...rom skrf.media import DistributedCircuit\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.18     "from skrf import Frequency\n
+                                      ",
+? 
+! Undefined control sequence.
+l.19     "from skrf import network\n
+                                    ",
+? 
+! Undefined control sequence.
+l.20     "from skrf.network import *\n
+                                      ",
+? 
+! Undefined control sequence.
+l.21     "\n
+            ",
+? 
+! Undefined control sequence.
+l.22     "from skrf import plotting \n
+                                      ",
+? 
+! Undefined control sequence.
+l.23     "\n
+            ",
+? 
+! Undefined control sequence.
+l.24     "import matplotlib.pyplot as plt\n
+                                           ",
+? 
+! Undefined control sequence.
+l.25     "\n
+            ",
+? 
+! Undefined control sequence.
+l.26     "from IPython.display import Image  \n
+                                               ",
+? 
+! Undefined control sequence.
+l.27     "\n
+            ",
+? 
+! Undefined control sequence.
+l.29     "\n
+            ",
+? 
+! Undefined control sequence.
+l.30     "my_params = {\n
+                         ",
+? 
+! Undefined control sequence.
+l.31     "'figure.dpi': 240,\n
+                              ",
+? 
+! Undefined control sequence.
+l.32     "'figure.figsize': [10,10],\n
+                                      ",
+? 
+! Undefined control sequence.
+l.33     "'figure.subplot.left' : 0.15,\n
+                                         ",
+? 
+! Undefined control sequence.
+l.34     "'figure.subplot.right' : 0.9,\n
+                                         ",
+? 
+! Undefined control sequence.
+l.35     "'figure.subplot.bottom' : 0.12,\n
+                                           ",
+? 
+! Undefined control sequence.
+l.36     "'axes.titlesize' : 'medium',\n
+                                        ",
+? 
+! Undefined control sequence.
+l.37     "'axes.labelsize' : 10 ,\n
+                                   ",
+? 
+! Undefined control sequence.
+l.38     "'ytick.labelsize' :'small',\n
+                                       ",
+? 
+! Undefined control sequence.
+l.39     "'xtick.labelsize' :'small',\n
+                                       ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.40     "'legend.fontsize' : 8, #
+                                  small,\n",
+? 
+! Undefined control sequence.
+l.40     "'legend.fontsize' : 8, #small,\n
+                                          ",
+? 
+! Undefined control sequence.
+l.41     "'legend.loc' : 'best',\n
+                                  ",
+? 
+! Undefined control sequence.
+l.42     "'font.size' : 10.0,\n
+                               ",
+? 
+! Undefined control sequence.
+l.43     "'font.family' : 'serif',\n
+                                    ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.44     "'text.usetex' : False, #
+                                   if you dont have latex\n",
+? 
+! Undefined control sequence.
+l.44 ...setex' : False, # if you dont have latex\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.45     "}\n
+             ",
+? 
+! Extra }, or forgotten $.
+l.48   }
+        ,
+? 
+! You can't use `macro parameter character #' in math mode.
+l.55     "#
+            funciones empleadas estan definidas en mysmith.py\n",
+? 
+! Undefined control sequence.
+l.55 ... empleadas estan definidas en mysmith.py\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.56     "\n
+            ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.64     "#
+           # Es importante correr el c√≥digo siguiente en orden para no alte...
+
+? 
+! You can't use `macro parameter character #' in math mode.
+l.64     "##
+             Es importante correr el c√≥digo siguiente en orden para no alte...
+
+? 
+! Undefined control sequence.
+l.64 ...a no alterar los valores guardados en nw\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.65     "\n
+            ",
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.66     "    . $
+                 r_g = 10 \\Omega$\n",
+? 
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ≥ in font cmr10!
+Missing character: There is no r in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.66     "    . $r_
+                   g = 10 \\Omega$\n",
+? 
+! Undefined control sequence.
+l.66     "    . $r_g = 10 \\Omega$\n
+                                    ",
+? 
+Missing character: There is no " in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no " in font nullfont!
+Missing character: There is no . in font nullfont!
+! Undefined control sequence.
+l.67     "    . $f_o = 100MHz$\n
+                                ",
+? 
+Missing character: There is no " in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no " in font nullfont!
+! Undefined control sequence.
+l.68     "\n
+            ",
+? 
+Missing character: There is no " in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no " in font nullfont!
+Missing character: There is no . in font nullfont!
+! Undefined control sequence.
+l.69     "    . $RL  = 100 \\Omega$\n
+                                     ",
+? 
+Missing character: There is no " in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no " in font nullfont!
+! Undefined control sequence.
+l.70     "    \n
+                ",
+? 
+Missing character: There is no " in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no " in font nullfont!
+Missing character: There is no . in font nullfont!
+! Undefined control sequence.
+l.71     "    . $L1 = 10 Hz, QoL = 100 $\n
+                                          ",
+? 
+Missing character: There is no " in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no " in font nullfont!
+Missing character: There is no . in font nullfont!
+! Undefined control sequence.
+l.72     "    . $C1 = 10 F,  ESR = 1 $\n
+                                        ",
+? 
+Missing character: There is no " in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no " in font nullfont!
+! Undefined control sequence.
+l.73     "    \n
+                ",
+? 
+Missing character: There is no " in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no " in font nullfont!
+! Undefined control sequence.
+l.74     "    \n
+                ",
+? 
+Missing character: There is no " in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no " in font nullfont!
+! Undefined control sequence.
+l.75     "\n
+            "
+? 
+Missing character: There is no " in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no " in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no l in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.79    "cell_
+              type": "code",
+? 
+! Undefined control sequence.
+l.85 ...CWEZAAAAEv8GbPX2zSbS+IAAAAAASUVORK5CYII=\n
+                                                  ",
+? 
+
+LaTeX Warning: Command \" invalid in math mode on input line 100.
+
+
+LaTeX Warning: Command \" invalid in math mode on input line 100.
+
+LaTeX Font Info:    Try loading font information for +cmr on input line 100.
+LaTeX Font Info:    No file cmr.fd. on input line 100.
+
+LaTeX Font Warning: Font shape `/cmr/m/n' undefined
+(Font)              using `/cmr/m/n' instead on input line 100.
+
+! Corrupted NFSS tables.
+wrong@fontshape ...message {Corrupted NFSS tables}
+                                                  error@fontshape else let f...
+l.100     "Image(filename= \"f
+                              ig/eje1.png\",width=450)"
+? 
+
+LaTeX Font Warning: Font shape `/cmr/m/n' undefined
+(Font)              using `OT1/cmr/m/n' instead on input line 100.
+
+! Please use \mathaccent for accents in math mode.
+\add@accent ...@spacefactor \spacefactor }\accent 
+                                                  #1 #2\egroup \spacefactor ...
+l.100     "Image(filename= \"f
+                              ig/eje1.png\",width=450)"
+? 
+! Missing { inserted.
+<to be read again> 
+                   \edef 
+l.100     "Image(filename= \"f
+                              ig/eje1.png\",width=450)"
+? 
+! You can't use `\spacefactor' in math mode.
+\add@accent ...}\accent #1 #2\egroup \spacefactor 
+                                                  \accent@spacefactor 
+l.100     "Image(filename= \"f
+                              ig/eje1.png\",width=450)"
+? 
+
+LaTeX Warning: Command \" invalid in math mode on input line 100.
+
+! Please use \mathaccent for accents in math mode.
+\add@accent ...@spacefactor \spacefactor }\accent 
+                                                  #1 #2\egroup \spacefactor ...
+l.100     "Image(filename= \"fig/eje1.png\",
+                                            width=450)"
+? 
+! You can't use `\spacefactor' in math mode.
+\add@accent ...}\accent #1 #2\egroup \spacefactor 
+                                                  \accent@spacefactor 
+l.100     "Image(filename= \"fig/eje1.png\",
+                                            width=450)"
+? 
+! Undefined control sequence.
+l.114       "fo = 1e+08 Hz\n
+                            "
+? 
+! You can't use `macro parameter character #' in math mode.
+l.119     "#
+             impedancia de carga\n",
+? 
+! Undefined control sequence.
+l.119     "# impedancia de carga\n
+                                  ",
+? 
+! Undefined control sequence.
+l.120     "RL = 100\n
+                     ",
+? 
+! Undefined control sequence.
+l.121     "\n
+             ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.122     "#
+             componentes\n",
+? 
+! Undefined control sequence.
+l.122     "# componentes\n
+                          ",
+? 
+! Undefined control sequence.
+l.123     "C1   =  4.7746e-11 \n
+                                ",
+? 
+! Undefined control sequence.
+l.124     "rpcs =  1 \n
+                       ",
+? 
+! Undefined control sequence.
+l.125     "\n
+             ",
+? 
+! Undefined control sequence.
+l.126     "L1  =  4.6898e-08 \n
+                               ",
+? 
+! Undefined control sequence.
+l.127     "Qol =  100 \n
+                        ",
+? 
+! Undefined control sequence.
+l.128     "\n
+             ",
+? 
+! Undefined control sequence.
+l.129     "\n
+             ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.130     "#
+            # Frecuencia de trabajo\n",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.130     "##
+              Frecuencia de trabajo\n",
+? 
+! Undefined control sequence.
+l.130     "## Frecuencia de trabajo\n
+                                     ",
+? 
+! Undefined control sequence.
+l.131     "fo =  100e6\n
+                        ",
+? 
+! Undefined control sequence.
+l.132     "wo =  2*np.pi*fo\n
+                             ",
+? 
+! Undefined control sequence.
+l.133 ...req = Frequency(fo/1e6,100/1e6,1,'mhz')\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.134 ...o = {:0.4} Hz'.format(float(freq.f) ) )\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.135     "\n
+             ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.136     "#
+             impedancia de referencia\n",
+? 
+! Undefined control sequence.
+l.136     "# impedancia de referencia\n
+                                       ",
+? 
+! Undefined control sequence.
+l.137     "z0 = 50\n
+                    ",
+? 
+! Undefined control sequence.
+l.138     "\n
+             ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.139     "#
+             Perdidas capacitor\n",
+? 
+! Undefined control sequence.
+l.139     "# Perdidas capacitor\n
+                                 ",
+? 
+! Undefined control sequence.
+l.140     "Qoc  = 1/(rpcs*wo*C1)\n
+                                  ",
+? 
+! Undefined control sequence.
+l.141     "rpcp = rpcs *(1+ Qoc**2)\n
+                                     ",
+? 
+! Undefined control sequence.
+l.142     "\n
+             ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.143     "#
+             perdidas inductor\n",
+? 
+! Undefined control sequence.
+l.143     "# perdidas inductor\n
+                                ",
+? 
+! Undefined control sequence.
+l.144     "rpls = (wo*L1)/Qol\n
+                               "
+? 
+! Undefined control sequence.
+l.156       "ZL\n
+                 ",
+? 
+! Undefined control sequence.
+l.157       "R = 1.000e+02 ohms\n
+                                 ",
+? 
+! Undefined control sequence.
+l.158       "X = 0.000e+00 ohms\n
+                                 ",
+? 
+! Undefined control sequence.
+l.159       "Q = 0.00 \n
+                        ",
+? 
+! Undefined control sequence.
+l.160       "\n
+               ",
+? 
+! Undefined control sequence.
+l.161       "(C1//RL)\n
+                       ",
+? 
+! Undefined control sequence.
+l.162       "R = 1.000e+01 ohms\n
+                                 ",
+? 
+! Undefined control sequence.
+l.163       "X = -3.000e+01 ohms\n
+                                  ",
+? 
+! Undefined control sequence.
+l.164       "Q = 3.00 \n
+                        ",
+? 
+! Undefined control sequence.
+l.165       "\n
+               ",
+? 
+! Undefined control sequence.
+l.166       "L1(C1//RL)\n
+                         ",
+? 
+! Undefined control sequence.
+l.167       "R = 1.000e+01 ohms\n
+                                 ",
+? 
+! Undefined control sequence.
+l.168       "X = -5.334e-01 ohms\n
+                                  ",
+? 
+! Undefined control sequence.
+l.169       "Q = 0.05 \n
+                        ",
+? 
+! Undefined control sequence.
+l.170       "\n
+               "
+? 
+! You can't use `macro parameter character #' in math mode.
+l.175     "#
+             Defino el valor de capacidad paralelo\n",
+? 
+! Undefined control sequence.
+l.175 ...# Defino el valor de capacidad paralelo\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.176     "C1p = np.linspace(C1/100, C1, 1000)\n
+                                                ",
+? 
+! Undefined control sequence.
+l.177     "\n
+             ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.178     "#
+             Defino el valor de inductancia serie\n",
+? 
+! Undefined control sequence.
+l.178 ..."# Defino el valor de inductancia serie\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.179     "L1s = np.linspace(L1/100, L1, 1000)\n
+                                                ",
+? 
+! Undefined control sequence.
+l.180     "\n
+             ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.181     "#
+             Defino el valor de las perdidas\n",
+? 
+! Undefined control sequence.
+l.181     "# Defino el valor de las perdidas\n
+                                              ",
+? 
+! Undefined control sequence.
+l.182 ...nspace((rpcs+rpls)*10, (rpcs+rpls), 10)\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.183     "\n
+             ",
+? 
+! Undefined control sequence.
+l.184     "\n
+             ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.185     "#
+            # Sin perdidas !\n",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.185     "##
+              Sin perdidas !\n",
+? 
+! Undefined control sequence.
+l.185     "## Sin perdidas !\n
+                              ",
+? 
+! Undefined control sequence.
+l.186     "nw1 =  mys.ZL(freq,RL,z0)\n
+                                      ",
+? 
+! Undefined control sequence.
+l.187     "nw   = nw1 \n
+                        ",
+? 
+! Undefined control sequence.
+l.188     "\n
+             ",
+? 
+! Undefined control sequence.
+l.189     "print('ZL')    \n
+                            ",
+? 
+! Undefined control sequence.
+l.190     "mys.printZ(nw.z[-1,0,0])\n
+                                     ",
+? 
+! Undefined control sequence.
+l.191     "print('')\n
+                      ",
+? 
+! Undefined control sequence.
+l.192     "\n
+             ",
+? 
+! Undefined control sequence.
+l.193     "\n
+             ",
+? 
+! Undefined control sequence.
+l.194     "for c in C1p:\n
+                          ",
+? 
+! Undefined control sequence.
+l.195 ....Zparal(freq,1j*mys.Xc(freq.f[0],c),z0)\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.196     "    nw2  = cascade(nwa,nw1)\n
+                                        ",
+? 
+! Undefined control sequence.
+l.197     "    nw   = stitch(nw,nw2 )    \n
+                                           ",
+? 
+! Undefined control sequence.
+l.198     "\n
+             ",
+? 
+! Undefined control sequence.
+l.199     "print('(C1//RL)')    \n
+                                  ",
+? 
+! Undefined control sequence.
+l.200     "mys.printZ(nw.z[-1,0,0])\n
+                                     ",
+? 
+! Undefined control sequence.
+l.201     "print('')    \n
+                          ",
+? 
+! Undefined control sequence.
+l.202     "    \n
+                 ",
+? 
+! Undefined control sequence.
+l.203     "for l in L1s:\n
+                          ",
+? 
+! Undefined control sequence.
+l.204 ....Yserie(freq,1j*mys.Bl(freq.f[0],l),z0)\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.205     "    nw3 = cascade(nwa,nw2)\n
+                                       ",
+? 
+! Undefined control sequence.
+l.206     "    nw   = stitch(nw,nw3 )\n
+                                       ",
+? 
+! Undefined control sequence.
+l.207     "\n
+             ",
+? 
+! Undefined control sequence.
+l.208     "print('L1(C1//RL)')    \n
+                                    ",
+? 
+! Undefined control sequence.
+l.209     "mys.printZ(nw.z[-1,0,0])\n
+                                     ",
+? 
+! Undefined control sequence.
+l.210     "print('')\n
+                      "
+? 
+! Undefined control sequence.
+l.222       "RL  = 100.000 ohms\n
+                                 ",
+? 
+! Undefined control sequence.
+l.223       "Zin = 10.000-0.533j ohms\n
+                                       "
+? 
+! Undefined control sequence.
+l.228 ...hkaaopimX8AUXEL3gEQv7IAAAAASUVORK5CYII=\n
+                                                  ",
+? 
+! Double subscript.
+l.238     "nw.plot_s_
+                     smith(m=0,n=0,color='r',draw_labels=True,show_legend = ...
+
+? 
+! Undefined control sequence.
+l.238 ...e,show_legend = False, chart_type='yz')\n
+                                                  ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.239     "#
+            plotting.smith(draw_vswr=[100.0] )\n",
+? 
+! Undefined control sequence.
+l.239     "#plotting.smith(draw_vswr=[100.0] )\n
+                                                ",
+? 
+! Undefined control sequence.
+l.240     "\n
+             ",
+? 
+! Double subscript.
+l.241     "nw1.plot_s_
+                      smith(m=0,n=0,color='g',draw_labels=True,show_legend =...
+
+? 
+! Undefined control sequence.
+l.241 ...nd = False, chart_type='yz',marker='o')\n
+                                                  ",
+? 
+! Double subscript.
+l.242     "nw2.plot_s_
+                      smith(m=0,n=0,color='b',draw_labels=True,show_legend =...
+
+? 
+! Undefined control sequence.
+l.242 ...d = False, chart_type='yz',marker='o') \n
+                                                  ",
+? 
+! Double subscript.
+l.243     "nw3.plot_s_
+                      smith(m=0,n=0,color='y',draw_labels=True,show_legend =...
+
+? 
+! Undefined control sequence.
+l.243 ...nd = False, chart_type='yz',marker='o')\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.244     "\n
+             ",
+? 
+! Undefined control sequence.
+l.245 ...{:1.3f} ohms'.format(nw.z[0,0,0].real))\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.258       "RL\n
+                 ",
+? 
+! Undefined control sequence.
+l.259       "R = 1.000e+02 ohms\n
+                                 ",
+? 
+! Undefined control sequence.
+l.260       "X = 0.000e+00 ohms\n
+                                 ",
+? 
+! Undefined control sequence.
+l.261       "Q = 0.00 \n
+                        ",
+? 
+! Undefined control sequence.
+l.262       "\n
+               ",
+? 
+! Undefined control sequence.
+l.263       "(C1//RL)\n
+                       ",
+? 
+! Undefined control sequence.
+l.264       "R = 1.070e+01 ohms\n
+                                 ",
+? 
+! Undefined control sequence.
+l.265       "X = -2.945e+01 ohms\n
+                                  ",
+? 
+! Undefined control sequence.
+l.266       "Q = 2.75 \n
+                        ",
+? 
+! Undefined control sequence.
+l.267       "\n
+               ",
+? 
+! Undefined control sequence.
+l.268       "L1(C1//RL)\n
+                         ",
+? 
+! Undefined control sequence.
+l.269       "R = 1.099e+01 ohms\n
+                                 ",
+? 
+! Undefined control sequence.
+l.270       "X = 2.001e-02 ohms\n
+                                 ",
+? 
+! Undefined control sequence.
+l.271       "Q = 0.00 \n
+                        ",
+? 
+! Undefined control sequence.
+l.272       "\n
+               "
+? 
+! You can't use `macro parameter character #' in math mode.
+l.277     "#
+             Con Perdidas (en serie)\n",
+? 
+! Undefined control sequence.
+l.277     "# Con Perdidas (en serie)\n
+                                      ",
+? 
+! Undefined control sequence.
+l.278     "\n
+             ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.279     "#
+             Defino el valor de capacidad paralelo\n",
+? 
+! Undefined control sequence.
+l.279 ...# Defino el valor de capacidad paralelo\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.280     "C1p = np.linspace(C1/10, C1, 1000)\n
+                                               ",
+? 
+! Undefined control sequence.
+l.281     "\n
+             ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.282     "#
+             Defino las perdidas del capacitor\n",
+? 
+! Undefined control sequence.
+l.282     "# Defino las perdidas del capacitor\n
+                                                ",
+? 
+! Undefined control sequence.
+l.283 ...inspace((rpcp), (rpcp)*1000, 100)[::-1]\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.284     "\n
+             ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.285     "#
+             Defino el valor de inductancia serie\n",
+? 
+! Undefined control sequence.
+l.285 ..."# Defino el valor de inductancia serie\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.286     "L1s = np.linspace(L1/10, L1, 100)\n
+                                              ",
+? 
+! Undefined control sequence.
+l.287     "\n
+             ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.288     "#
+             Defino las perdidas del inductor\n",
+? 
+! Undefined control sequence.
+l.288     "# Defino las perdidas del inductor\n
+                                               ",
+? 
+! Undefined control sequence.
+l.289 ... = np.linspace((rpls)/100, (rpls), 100)\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.290     "\n
+             ",
+? 
+! Undefined control sequence.
+l.291     "\n
+             ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.292     "#
+            # Sin perdidas !\n",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.292     "##
+              Sin perdidas !\n",
+? 
+! Undefined control sequence.
+l.292     "## Sin perdidas !\n
+                              ",
+? 
+! Undefined control sequence.
+l.293     "nw1 =  mys.ZL(freq,RL,z0)\n
+                                      ",
+? 
+! Undefined control sequence.
+l.294     "nw   = nw1 \n
+                        ",
+? 
+! Undefined control sequence.
+l.295     "\n
+             ",
+? 
+! Undefined control sequence.
+l.296     "print('RL')    \n
+                            ",
+? 
+! Undefined control sequence.
+l.297     "mys.printZ(nw.z[-1,0,0])\n
+                                     ",
+? 
+! Undefined control sequence.
+l.298     "print('')\n
+                      ",
+? 
+! Undefined control sequence.
+l.299     "\n
+             ",
+? 
+! Undefined control sequence.
+l.300     "for c in C1p:\n
+                          ",
+? 
+! Undefined control sequence.
+l.301 ....Zparal(freq,1j*mys.Xc(freq.f[0],c),z0)\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.302     "    nw2  = cascade(nwa,nw1)\n
+                                        ",
+? 
+! Undefined control sequence.
+l.303     "    nw   = stitch(nw,nw2 )    \n
+                                           ",
+? 
+! Undefined control sequence.
+l.304     "\n
+             ",
+? 
+! Undefined control sequence.
+l.305     "    \n
+                 ",
+? 
+! Undefined control sequence.
+l.306     "    \n
+                 ",
+? 
+! Undefined control sequence.
+l.307     "for r in rpp:\n
+                          ",
+? 
+! Undefined control sequence.
+l.308     "    nwa = mys.Zparal(freq,r,z0)\n
+                                            ",
+? 
+! Undefined control sequence.
+l.309     "    nw3  = cascade(nwa,nw2)\n
+                                        ",
+? 
+! Undefined control sequence.
+l.310     "    nw   = stitch(nw,nw3 )    \n
+                                           ",
+? 
+! Undefined control sequence.
+l.311     "\n
+             ",
+? 
+! Undefined control sequence.
+l.312     "print('(C1//RL)')    \n
+                                  ",
+? 
+! Undefined control sequence.
+l.313     "mys.printZ(nw.z[-1,0,0])\n
+                                     ",
+? 
+! Undefined control sequence.
+l.314     "print('')\n
+                      ",
+? 
+! Undefined control sequence.
+l.315     "        \n
+                     ",
+? 
+! Undefined control sequence.
+l.316     "for l in L1s:\n
+                          ",
+? 
+! Undefined control sequence.
+l.317 ....Yserie(freq,1j*mys.Bl(freq.f[0],l),z0)\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.318     "    nw4 = cascade(nwa,nw3)\n
+                                       ",
+? 
+! Undefined control sequence.
+l.319     "    nw   = stitch(nw,nw4 )\n
+                                       ",
+? 
+! Undefined control sequence.
+l.320     "    \n
+                 ",
+? 
+! Undefined control sequence.
+l.321     "for r in rps:\n
+                          ",
+? 
+! Undefined control sequence.
+l.322     "    nwa = mys.Yserie(freq,1/r,z0)\n
+                                              ",
+? 
+! Undefined control sequence.
+l.323     "    nw5 = cascade(nwa,nw4)\n
+                                       ",
+? 
+! Undefined control sequence.
+l.324     "    nw  = stitch(nw,nw5 )     \n
+                                           ",
+? 
+! Undefined control sequence.
+l.325     "\n
+             ",
+? 
+! Undefined control sequence.
+l.326     "print('L1(C1//RL)')    \n
+                                    ",
+? 
+! Undefined control sequence.
+l.327     "mys.printZ(nw.z[-1,0,0])\n
+                                     ",
+? 
+! Undefined control sequence.
+l.328     "print('')\n
+                      "
+? 
+! Undefined control sequence.
+l.340       "RL  = 100.000 ohms\n
+                                 ",
+? 
+! Undefined control sequence.
+l.341       "Zin = 10.993+0.020j ohms\n
+                                       "
+? 
+! Undefined control sequence.
+l.346 ...RkaaoqyMv8F4bqiTJ8L1jgAAAAASUVORK5CYII=\n
+                                                  ",
+? 
+! Double subscript.
+l.356     "nw.plot_s_
+                     smith(m=0,n=0,color='r',draw_labels=True,show_legend = ...
+
+? 
+! Undefined control sequence.
+l.356 ...e,show_legend = False, chart_type='yz')\n
+                                                  ",
+? 
+! You can't use `macro parameter character #' in math mode.
+l.357     "#
+            plotting.smith(draw_vswr=[100.0] )\n",
+? 
+! Undefined control sequence.
+l.357     "#plotting.smith(draw_vswr=[100.0] )\n
+                                                ",
+? 
+! Undefined control sequence.
+l.358     "\n
+             ",
+? 
+! Double subscript.
+l.359     "nw1.plot_s_
+                      smith(m=0,n=0,color='g',draw_labels=True,show_legend =...
+
+? 
+! Undefined control sequence.
+l.359 ...nd = False, chart_type='yz',marker='o')\n
+                                                  ",
+? 
+! Double subscript.
+l.360     "nw2.plot_s_
+                      smith(m=0,n=0,color='b',draw_labels=True,show_legend =...
+
+? 
+! Undefined control sequence.
+l.360 ...d = False, chart_type='yz',marker='o') \n
+                                                  ",
+? 
+! Double subscript.
+l.361     "nw3.plot_s_
+                      smith(m=0,n=0,color='r',draw_labels=True,show_legend =...
+
+? 
+! Undefined control sequence.
+l.361 ...nd = False, chart_type='yz',marker='o')\n
+                                                  ",
+? 
+! Double subscript.
+l.362     "nw4.plot_s_
+                      smith(m=0,n=0,color='c',draw_labels=True,show_legend =...
+
+? 
+! Undefined control sequence.
+l.362 ...nd = False, chart_type='yz',marker='o')\n
+                                                  ",
+? 
+! Double subscript.
+l.363     "nw5.plot_s_
+                      smith(m=0,n=0,color='g',draw_labels=True,show_legend =...
+
+? 
+! Undefined control sequence.
+l.363 ...nd = False, chart_type='yz',marker='o')\n
+                                                  ",
+? 
+! Undefined control sequence.
+l.364     "\n
+             ",
+? 
+! Undefined control sequence.
+l.365 ...{:1.3f} ohms'.format(nw.z[0,0,0].real))\n
+                                                  ",
+? 
+! Extra }, or forgotten $.
+l.405 }
+       
+? 
+)
+*
+! Missing $ inserted.
+<inserted text> 
+                $
+<*> 
+    
+? 
+Missing character: There is no Ë in font cmex10!
+! \textfont 4 is undefined (character ‚).
+<inserted text> $
+                 
+<*> 
+    
+? 
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 2--0
+[]
+ []
+
+
+Overfull \hbox (29.02547pt too wide) in paragraph at lines 2--0
+[]\OML/cmm/m/it/10 ype\/cmr/m/n/10 " :
+ []
+
+
+Overfull \hbox (116.28067pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 "\OML/cmm/m/it/10 code\/cmr/m/n/10 "\OML/cmm/m/it/10 ; \/cmr/m/n/1
+0 "\OML/cmm/m/it/10 execution[]ount\/cmr/m/n/10 " :
+ []
+
+
+Overfull \hbox (66.72112pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 1\OML/cmm/m/it/10 ; \/cmr/m/n/10 "\OML/cmm/m/it/10 metadata\/cmr/m
+/n/10 " :
+ []
+
+
+Overfull \hbox (53.2373pt too wide) in paragraph at lines 2--0
+[]\OML/cmm/m/it/10 ; \/cmr/m/n/10 "\OML/cmm/m/it/10 outputs\/cmr/m/n/10 " :
+ []
+
+
+Overfull \hbox (54.58801pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 []\OML/cmm/m/it/10 ; \/cmr/m/n/10 "\OML/cmm/m/it/10 source\/cmr/m/
+n/10 " :
+ []
+
+
+Overfull \hbox (372.56136pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 ["\OML/cmm/m/it/10 importnumpyasnp\/cmr/m/n/10 "\OML/cmm/m/it/10 ;
+ \/cmr/m/n/10 "\OML/cmm/m/it/10 importmatplotlib:pyplotasplt\/cmr/m/n/10 "\OML/
+cmm/m/it/10 ; \/cmr/m/n/10 ""\OML/cmm/m/it/10 ; \/cmr/m/n/10 ""\OML/cmm/m/it/10
+ ; \/cmr/m/n/10 ""\OML/cmm/m/it/10 ; \/cmr/m/n/10 "\OML/cmm/m/it/10 frompylabim
+port \OMS/cmsy/m/n/10 ^^C
+ []
+
+
+Overfull \hbox (633.9364pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 "\OML/cmm/m/it/10 ; \/cmr/m/n/10 ""\OML/cmm/m/it/10 ; \/cmr/m/n/10
+ ""\OML/cmm/m/it/10 ; \/cmr/m/n/10 "\OML/cmm/m/it/10 fromskrf:mediaimportDistri
+butedCircuit\/cmr/m/n/10 "\OML/cmm/m/it/10 ; \/cmr/m/n/10 "\OML/cmm/m/it/10 fro
+mskrfimportFrequency\/cmr/m/n/10 "\OML/cmm/m/it/10 ; \/cmr/m/n/10 "\OML/cmm/m/i
+t/10 fromskrfimportnetwork\/cmr/m/n/10 "\OML/cmm/m/it/10 ; \/cmr/m/n/10 "\OML/c
+mm/m/it/10 fromskrf:networkimport \OMS/cmsy/m/n/10 ^^C
+ []
+
+
+Overfull \hbox (587.98857pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 "\OML/cmm/m/it/10 ; \/cmr/m/n/10 ""\OML/cmm/m/it/10 ; \/cmr/m/n/10
+ "\OML/cmm/m/it/10 fromskrfimportplotting\/cmr/m/n/10 "\OML/cmm/m/it/10 ; \/cmr
+/m/n/10 ""\OML/cmm/m/it/10 ; \/cmr/m/n/10 "\OML/cmm/m/it/10 importmatplotlib:py
+plotasplt\/cmr/m/n/10 "\OML/cmm/m/it/10 ; \/cmr/m/n/10 ""\OML/cmm/m/it/10 ; \/c
+mr/m/n/10 "\OML/cmm/m/it/10 fromIPython:displayimportImage\/cmr/m/n/10 "\OML/cm
+m/m/it/10 ; \/cmr/m/n/10 ""\OML/cmm/m/it/10 ; \/cmr/m/n/10 """\OML/cmm/m/it/10 
+; \/cmr/m/n/10 "\OML/cmm/m/it/10 my[]arams \/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (3333.46835pt too wide) in paragraph at lines 2--0
+[]\/cmr/m/n/10 "\OML/cmm/m/it/10 ; \/cmr/m/n/10 "\OML/cmm/m/it/10 rcParams:upda
+te\/cmr/m/n/10 (\OML/cmm/m/it/10 my[]arams\/cmr/m/n/10 )"]\OML/cmm/m/it/10 ; []
+; []$$[] \/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (10.00003pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 10[] 
+ []
+
+
+Overfull \hbox (31.7563pt too wide) in paragraph at lines 2--0
+\OML/cmm/m/it/10 Omega$
+ []
+
+
+Overfull \hbox (19.89859pt too wide) in paragraph at lines 2--0
+\OML/cmm/m/it/10 f[] \/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (40.00697pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 100\OML/cmm/m/it/10 MHz$
+ []
+
+
+Overfull \hbox (25.03123pt too wide) in paragraph at lines 2--0
+\OML/cmm/m/it/10 RL \/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (15.00005pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 100[] 
+ []
+
+
+Overfull \hbox (31.7563pt too wide) in paragraph at lines 2--0
+\OML/cmm/m/it/10 Omega$
+ []
+
+
+Overfull \hbox (22.3611pt too wide) in paragraph at lines 2--0
+\OML/cmm/m/it/10 L\/cmr/m/n/10 1 =
+ []
+
+
+Overfull \hbox (58.77357pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 10\OML/cmm/m/it/10 Hz; QoL \/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (15.00005pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 100$
+ []
+
+
+Overfull \hbox (23.41801pt too wide) in paragraph at lines 2--0
+\OML/cmm/m/it/10 C\/cmr/m/n/10 1 =
+ []
+
+
+Overfull \hbox (54.04506pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 10\OML/cmm/m/it/10 F; ESR \/cmr/m/n/10 =
+ []
+
+
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 1$
+ []
+
+
+Overfull \hbox (29.02547pt too wide) in paragraph at lines 2--0
+[]\OML/cmm/m/it/10 ype\/cmr/m/n/10 " :
+ []
+
+
+Overfull \hbox (116.28067pt too wide) in paragraph at lines 2--0
+\/cmr/m/n/10 "\OML/cmm/m/it/10 code\/cmr/m/n/10 "\OML/cmm/m/it/10 ; \/cmr/m/n/1
+0 "\OML/cmm/m/it/10 exec

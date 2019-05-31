@@ -241,7 +241,7 @@ printZ(nw.z[-1,0,0])
 nw.plot_s_smith(m=0,n=0,color='r',draw_labels=True,show_legend = False, chart_type='yz')
 #plotting.smith(draw_vswr=[100.0] )
 
-#nw1.plot_s_smith(m=0,n=0,color='g',draw_labels=True,show_legend = False, chart_type='yz',marker='o')
+nw1.plot_s_smith(m=0,n=0,color='g',draw_labels=True,show_legend = False, chart_type='yz',marker='o')
 nw2.plot_s_smith(m=0,n=0,color='b',draw_labels=True,show_legend = False, chart_type='yz',marker='o') 
 nw3.plot_s_smith(m=0,n=0,color='y',draw_labels=True,show_legend = False, chart_type='yz',marker='o')
 nw4.plot_s_smith(m=0,n=0,color='r',draw_labels=True,show_legend = False, chart_type='yz',marker='o')
