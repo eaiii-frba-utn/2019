@@ -1,0 +1,573 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.1'
+      jupytext_version: 1.1.1
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy                  # http://scipy.org/
+from scipy import signal
+
+from IPython.display import Image  
+# %matplotlib inline
+params = {'legend.fontsize': 24,
+          'figure.figsize': (12, 8),
+         'axes.labelsize': 24,
+         'axes.titlesize': 24,
+         'xtick.labelsize':24,
+         'ytick.labelsize':24}
+plt.rcParams.update(params) 
+
+
+
+from IPython.display import Image
+import sys 
+sys.path.insert(0,'/home/aalmela/scm/git/utn/eaiii/2019/lib/')
+import myplot as myp
+
+#Image(filename= "fig/eje1.png",width=450)
+```
+
+<!-- #region -->
+El circuito de la figura corresponde a un receptor de Banda Aeronáutica ($118 MHz$ a $137 MHz$).  
+Está sintonizado para recibir el canal de  $F_c = 118 MHz$, de ancho de banda del canal de $BW = 50 KHz$, y
+ modulado al 50\%  por un tono único de $15\,KHz$.
+
+
+
+Todos los elementos activos (Amplificadores, mezclador y detector) son lineales y de parámetros constantes dentro de toda la banda de interés. 
+
+
+Ambos amplificadores (RF y FI) son sincrónicos.
+$F_{ol} = F_{c} + 10.7 MHz$, $F_{FI}= 10.7 MHz$
+
+
+La antena presenta una impedancia $R_{a}= 50 \Omega$ en toda la banda de interés. 
+
+El detector presenta una impedancia de $R_{det}= 1000 \Omega$
+
+
+Todos los tanques están adaptados a transferencia de energía a Q constate.
+
+Las bobinas empleadas para el amplificador de RF poseen : $Q_{oL} = 100$ y $N = 100$ espiras.
+Las bobinas empleadas para el amplificador de FI poseen : $Q_{oL} = 120$.
+Capacitores con $Q_{oC} = \infty$.
+
+Rechazo de frecuencia imagen  $\mid A_v{@f_{Img}} \mid = 55 dB$.
+
+
+Nota: Para los cálculos despreciar las capacidades del transistor si son despreciables respecto al capacitor de sintonía.  
+
+
+<!-- #endregion -->
+
+```{python}
+Image(filename= "fig/canvas.png",width=650)
+```
+
+```{python}
+Image(filename= "fig/RF.png",width=650)
+```
+
+```{python}
+Image(filename= "fig/IF.png",width=650)
+```
+
+<!-- #region -->
+Los parámetros del transistor de RF:
+
+$Y_{11} = (  1  + j4 ) mS$	
+
+$Y_{12} \sim 0 S$ 
+
+$Y_{21} = (  100 - j10  ) mS$ 
+
+$Y_{22} = (0.2  + j8) mS$ 
+
+
+    
+Los parámetros del transistor de FI:
+
+$Y_{11} = (  1  + j0.2) mS$	
+
+$Y_{12} \sim 0 S$
+
+$Y_{21} = (   40 - j2  ) mS$ 
+
+$Y_{22} = (0.1 + j0.4) mS$
+		
+
+
+Los parámetros del mezclador:
+
+$Y_{in}  = ( 1 ) mS$	
+
+$Y_{out} = (0.1) mS$ 
+
+$Av = 4 dB $  . 
+
+
+
+
+Determinar:
+
+1. Los $Q_{c}$ para las etapas de RF y FI respectivamente (10 puntos).
+
+2. Los valores para L1, N1, N2, N3 y C1 (10 puntos).
+
+3. Los valores para L2, C2 y C3. (10 puntos).
+
+4. Calcular la ganancia de tensión del amplificador de RF (10 puntos). 
+
+5. Calcular la ganancia de tensión del amplificador de FI (10 puntos). 
+
+6. Calcular la ganancia de tensión total (10 puntos). 
+
+7. Calcular la ganancia de potencia de cada amplificador y del amplificador total (10 puntos) (G = $\frac{P_{RL}}{P{in}} $ ). 
+
+8. Con el receptor en su condición original ($f_{c} = 118 MHz$), una falla en el Oscilador Local hace que la frecuencia del mismo se corra a $f'_{ol} = 128.71 MHz$.  
+Encontrar el índice de modulación (m) de la señal a la entrada del detector a la salida del mismo comparando con la condición de funcionamiento normal, siendo  $m = \frac {V_{pico} - V_{valle}}{V_{pico} + V_{valle}}$ (10 puntos).
+
+9. Se re-sintoniza a $F_{rf} = 137 MHz$. Calcular el rechazo variando solamente $C_1$ y manteniendo constante $L_1$ (10 puntos)
+
+10. Idem 9, calcular el rechazo variando solamente $L_1$ y manteniendo constante $C_1$, comparar con el resultado anterior (10 puntos). 
+
+<!-- #endregion -->
+
+```{python}
+# Datos
+frf    = 118e6 #Hz
+AttRF = 55 #dB
+BWif  = 50e3 #Hz
+
+#Numero de etapas RF
+NetRF = 2
+#Numero de etapas FI
+NetIF = 3
+
+# Impedancia de antena
+rg    = 50 #ohm
+
+# Impedancia detector
+rdet  = 1e3 
+
+# Transistor RF 
+y11rf = 1e-3 + 1j * 4e-3
+y12rf = 0
+y21rf = 100e-3 - 1j * 10e-3
+y22rf = 0.2e-3 + 1j * 8e-3
+
+# Transistor IF 
+y11if = 1e-3 + 1j * 0.2e-3
+y12if = 0
+y21if = 10e-3 - 1j * 2
+y22if = 0.1e-3 + 1j * 0.4e-3
+
+# Mezclador 
+yinmix  =  1e-3 
+youtmix = 0.1e-3
+Avmixdb = 4 #dB $  (G = $\frac{P_{in}}{P{RL}} $ ). 
+
+
+
+# componentes
+# Inductor RF
+Qolrf = 100 
+Nrf   = 100 # espiras
+
+# Inductor FI
+Qolif = 120
+Nfi   = 120
+
+Qoc = np.inf
+
+
+# Frecuancia FI 
+fif   = 10.7e6
+
+# Frecuencia Oscilador
+fosc  = frf + fif
+
+# Frecuancia Imagen
+fimg  = fosc + fif 
+print(fimg)
+```
+
+Determinar:
+
+1. Los $Q_{c}$ para las etapas de RF y FI respectivamente (10 puntos).
+
+
+```{python}
+# Calculo de Qc de la etapa de RF
+# Formula completa 
+# Att = ( 1/(1+Qrf^2*(f/fo-fo/f)^2)^0.5 )^NetRF
+# f = fimg
+Qrf  = (( (10**(AttRF/20))**(2/NetRF)  - 1 ) / (fimg/frf - frf/fimg)**2 )**(1/2)
+
+print('Qrf = {:1.2f}'.format(Qrf))
+
+
+# Calculo de Qc de la etapa de IF
+# Empleando aproximación de banda angosta
+# (1 /(1+Xif^2)^0.5 )^3 = 1/(2)^0.5  
+Xif = ( (2**(0.5))**(2/NetIF) - 1 )**0.5
+
+# Xif = 2*Q*df/fo 
+Qif = Xif/2/(BWif/2)*fif
+
+print('Qif = {:1.2f} (Aprox. Banda Angosta)'.format(Qif))
+
+# De igual manera, pero usando la expesion completa.
+fifs = fif + (BWif/2)
+Qif  = (( (2**(0.5))**(2/NetIF)  - 1 ) / (fifs/fif - fif/fifs)**2 )**(1/2)
+
+print('Qif = {:1.2f} (Formula completa)'.format(Qif))
+
+```
+
+2. Los valores para L1, N1, N2, N3 y C1 (10 puntos).
+
+
+```{python}
+# Calculo de la etapa de RF
+wrf = 2*np.pi*frf
+
+# resistencia de entrada 
+ri = 1/y11rf.real
+ci = y11rf.imag/wrf
+
+ro = 1/y22rf.real
+co = y22rf.imag/wrf
+
+#sintonizado de colector
+# calculo a tope de bobina del colector 
+XL1 = (1/Qrf-1/Qolrf) * (ro/2)
+L1   = XL1 / wrf  
+XC1 = XL1
+C1  = 1/(XC1*wrf)
+
+# Transformador de salida
+rmix = 1/yinmix.real
+
+# el transformador de salida debe llevar a rmix a ro para máxima transferencia de energía a Qcte
+# (ro/rmix) = (Nrf/N3)^2
+N3 = Nrf / ((ro/rmix)**(1/2) )
+
+# Transformador de la entrada
+# (ro/ri) = (Nrf/N2)^2
+N2 = Nrf / ((ro/ri)**(1/2) )
+
+# (ro/ri) = (Nrf/N2)^2
+N1 = Nrf / ((ro/rg)**(1/2) )
+
+print('Componentes de RF')
+print('L1 = {:1.2e} Hy'.format(L1))
+print('C1 = {:1.2e} F'.format(C1))
+print('N  = {:1.2f} e'.format(Nrf))
+print('N1 = {:1.2f} e'.format(N1))
+print('N2 = {:1.2f} e'.format(N2))
+print('N3 = {:1.2f} e'.format(N3))
+
+
+
+```
+
+3. Los valores para L2, C2 y C3. (10 puntos).
+
+```{python}
+# Calculo de la etapa de IF
+wif = 2*np.pi*fif
+
+# resistencia de entrada 
+ri = 1/y11if.real
+ci = y11if.imag/wif
+ro = 1/y22if.real
+co = y22if.imag/wif
+
+#sintonizado de colector
+# calculo a tope de bobina del colector 
+XL2 = (1/Qif-1/Qolif) * (ro/2)
+L2   = XL2 / wif
+
+# Capacitor de sintonia
+XCif = XL2
+Cif  = 1/(XCif*wif)
+
+
+# Divisor Capacitivo
+Qm2 = ro*wif*Cif 
+
+print(Qm2)
+# (ro/ri) = (nc)^2
+nc =  (ro/ri)**(1/2) 
+Qm1 = ((1+Qm2**2)/nc-1)**0.5
+print(Qm1)
+
+# Dado que Qm2 y Qm1 son mayores a 10, puedo emplear las ecuaciones aproximadas \
+# para el calculo de los capacitorees
+C3 = nc*Cif
+C2 = nc/(nc-1)*Cif
+
+print('Componentes de FI')
+print('L2 = {:1.2e} Hy'.format(L2))
+print('Cif = {:1.2e} F'.format(Cif))
+print('C2 = {:1.2e} F'.format(C2))
+print('C3 = {:1.2e} F'.format(C3))
+
+```
+
+4. Calcular la ganancia de tensión del amplificador de RF (10 puntos). 
+
+
+```{python}
+Image(filename= "fig/RFAv.png",width=650)
+```
+
+```{python}
+# Ganancia de tension RF
+# |Avrf(frf)|  = vo/vi = (vo/va) . (va/vb) . (vb/vc) . (vc/vi)
+
+Avoa = (N3/Nrf)
+
+
+gmrf = abs(y21rf)
+Avab = - gmrf * (wrf*L1*Qrf)
+
+Avbc = (N2/Nrf)
+
+Avci = (Nrf/N1)
+
+Avrf = Avoa * Avab * Avbc * Avci
+
+print('|Avrf| = {:1.2f} '.format(Avrf))
+
+print('|Avrf| = {:1.2f} dB'.format(20*np.log10(abs(Avrf)  )))
+
+```
+
+5. Calcular la ganancia de tensión del amplificador de FI (10 puntos).
+
+```{python}
+Image(filename= "fig/IFAv.png",width=650)
+```
+
+```{python}
+# Ganancia de tension IF
+# |Avif(frf)|  = vo/vi = (vo/va) . (va/vb) . (vb/vc) . (vc/vd) . (vd/vi) 
+
+Avoa = (1/nc)
+
+
+gmif = abs(y21if)
+Avab = - gmif * Qif*wif*L2
+
+Avbc = (1/nc)
+
+Avcd = - gmif * Qif*wif*L2
+
+Avdi = (1/nc)
+
+
+Avif = Avoa * Avab * Avbc * Avcd * Avdi
+
+
+print('|Avif| = {:1.2f} '.format(Avif))
+
+print('|Avif| = {:1.2f} dB'.format(20*np.log10(abs(Avif)  )))
+```
+
+6. Calcular la ganancia de tensión total (10 puntos).
+
+```{python}
+# Ganancia de tensión del receptor
+Avmix = 10**(Avmixdb/20) 
+
+Av = Avrf * Avmix * Avif
+
+
+print('|Av| = {:1.2f} '.format(Av))
+
+print('|Av| = {:1.2f} dB'.format(20*np.log10(abs(Av)  )))
+```
+
+7. Calcular la ganancia de potencia de cada amplificador y del amplificador total (10 puntos) (G = $\frac{P_{RL}}{P{in}} $ ). 
+
+```{python}
+# Ganancia de potencia RF
+
+# G = Pout/Pin
+# Pin = vin^2/Rin
+# Pout = vout^2/RL
+# G = Av^2 * (rin/RL)
+
+# Resistencia de entrada del Amplificador de RF
+r11  = 1/(y11rf).real
+r11p = r11*(Nrf/N2)**2
+
+
+rpL1 = Qolrf * L1 * wrf 
+
+rt  = (r11p*rpL1)/(r11p+rpL1)
+
+rin = rt*(N1/Nrf)**2
+
+
+# Resistencia de carga
+rl  = 1/yinmix.real
+
+# Ganancia de potencia de RF
+Grf = Avrf**2 * (rin/rl)
+
+print('|Grf| = {:1.2f} '.format(Grf))
+
+print('|Grf| = {:1.2f} dB'.format(10*np.log10(abs(Grf)  )))
+```
+
+```{python}
+# Ganancia de potencia IF
+
+# G = Pout/Pin
+# Pin = vin^2/Rin
+# Pout = vout^2/RL
+# G = Av^2 * (Rin/RL)
+
+r11  = 1/(y11if).real
+r11p = r11*(nc)**2
+
+rpL2 = Qolif * L2 * wif 
+
+
+rin  = (r11p*rpL2)/(r11p+rpL2)
+
+
+rl  = rdet
+
+# Ganancia de potencia de RF
+Gif = Avif**2 * (rin/rl)
+
+print('|Gif| = {:1.2f} '.format(Gif))
+
+print('|Gif| = {:1.2f} dB'.format(10*np.log10(abs(Gif)  )))
+```
+
+```{python}
+# Ganancia de potencia del mezclador
+
+# G = Pout/Pin
+# Pin = vin^2/Rin
+# Pout = vout^2/RL
+# G = Av^2 * (Rin/RL)
+
+rin  = 1/yinmix.real
+ro   = 1/youtmix.real
+
+Gmix = Avmix**2 * (rin/rl)
+
+print('|Gmix| = {:1.2f} '.format(Gmix))
+
+print('|Gmix| = {:1.2f} dB'.format(10*np.log10(abs(Gmix)  )))
+```
+
+```{python}
+G = Grf * Gmix * Gif
+
+print('|G| = {:1.2f} '.format(G))
+
+print('|G| = {:1.2f} dB'.format(10*np.log10(abs(G)  )))
+```
+
+8. Con el receptor en su condición original ($f_{c} = 118 MHz$), una falla en el Oscilador Local hace que la frecuencia del mismo se corra a $f'_{ol} = 128.71 MHz$.  
+Encontrar el índice de modulación (m) de la señal a la entrada del detector a la salida del mismo comparando con la condición de funcionamiento normal, siendo  $m = \frac {V_{pico} - V_{valle}}{V_{pico} + V_{valle}}$ (10 puntos).
+
+```{python}
+# La sintonia de la etapa de RF no se modifica
+# Se modifica la respuesta del amplificador de IF 
+
+# La frecuencia del oscilador local
+fosc1 = 128.71e6 
+
+# Portadora
+fif1  = fosc1 - frf  
+print('Frecuencia de la portadora en IF: {:1.4e} MHz'.format(fif1) )
+
+# Banda inferior
+fif1inf = fif1 - 15e3 
+print('Frecuencia de la frecuencia inferior en IF: {:1.4e} MHz'.format(fif1inf) )
+
+# Banda inferior
+fif1sup = fif1 + 15e3 
+print('Frecuencia de la frecuencia superior en IF: {:1.4e} MHz'.format(fif1inf) )
+
+# Calculo de la respuesta del filtro de IF 
+Ainf = 1/(1+Qif**2 * (fif1inf/fif - fif/fif1inf)**2)**(NetIF/2)
+
+
+Aif1 = 1/(1+Qif**2 * (fif1/fif - fif/fif1)**2)**(NetIF/2)
+
+
+Asup = 1/(1+Qif**2 * (fif1sup/fif - fif/fif1sup)**2)**(NetIF/2)
+print(Ainf, Aif1, Asup)
+
+Apico  = Aif1 + Ainf + Asup 
+Avalle = Aif1 - Ainf  - Asup 
+
+m = (Apico - Avalle)/(Apico + Avalle)
+print(m)
+```
+
+9. Se re-sintoniza a $F_{rf} = 137 MHz$. Calcular el rechazo variando solamente $C_1$ y manteniendo constante $L_1$ (10 puntos)
+
+
+```{python}
+# Calculo de la etapa de RF
+frfa =  137e6
+wrfa = 2*np.pi*frfa
+
+# resistencia de entrada 
+ri = 1/y11rf.real
+ci = y11rf.imag/wrf
+
+ro = 1/y22rf.real
+co = y22rf.imag/wrf
+
+#sintonizado de colector
+# calculo a tope de bobina del colector 
+C1a  = 1/(L1*wrfa**2)
+
+Qrfa  = Qrf*wrf/wrfa
+
+print(Qrfa, Qrf)
+```
+
+10. Idem 9, calcular el rechazo variando solamente $L_1$ y manteniendo constante $C_1$, comparar con el resultado anterior (10 puntos). 
+
+```{python}
+# Calculo de la etapa de RF
+frfb =  137e6
+wrfb = 2*np.pi*frfb
+
+
+
+#sintonizado de colector
+# calculo a tope de bobina del colector 
+L1b  = 1/(C1*wrfb**2)
+
+Qrfb  = Qrf*(wrf*L1)/(wrfb*L1b)
+
+print(Qrfb, Qrf)
+```
+
+```{python}
+
+```
