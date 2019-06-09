@@ -33,7 +33,7 @@ plt.rcParams.update(params)
 from IPython.display import Image
 import sys 
 sys.path.insert(0,'/home/aalmela/scm/git/utn/eaiii/2019/lib/')
-import myplot as myp
+
 
 #Image(filename= "fig/eje1.png",width=450)
 ```
@@ -170,7 +170,7 @@ y22rf = 0.2e-3 + 1j * 8e-3
 # Transistor IF 
 y11if = 1e-3 + 1j * 0.2e-3
 y12if = 0
-y21if = 10e-3 - 1j * 2
+y21if = 40e-3 - 1j * 2
 y22if = 0.1e-3 + 1j * 0.4e-3
 
 # Mezclador 
@@ -308,11 +308,11 @@ Cif  = 1/(XCif*wif)
 # Divisor Capacitivo
 Qm2 = ro*wif*Cif 
 
-print(Qm2)
+print('Qm2 = {:1.2f} '.format(Qm2))
 # (ro/ri) = (nc)^2
 nc =  (ro/ri)**(1/2) 
 Qm1 = ((1+Qm2**2)/nc-1)**0.5
-print(Qm1)
+print('Qm1 = {:1.2f} '.format(Qm1))
 
 # Dado que Qm2 y Qm1 son mayores a 10, puedo emplear las ecuaciones aproximadas \
 # para el calculo de los capacitorees
@@ -453,7 +453,7 @@ rin  = (r11p*rpL2)/(r11p+rpL2)
 
 rl  = rdet
 
-# Ganancia de potencia de RF
+# Ganancia de potencia de IF
 Gif = Avif**2 * (rin/rl)
 
 print('|Gif| = {:1.2f} '.format(Gif))
@@ -517,13 +517,20 @@ Aif1 = 1/(1+Qif**2 * (fif1/fif - fif/fif1)**2)**(NetIF/2)
 
 
 Asup = 1/(1+Qif**2 * (fif1sup/fif - fif/fif1sup)**2)**(NetIF/2)
-print(Ainf, Aif1, Asup)
+
+
+print('Ainf = {:1.2f} '.format(Ainf))
+print('Aif1 = {:1.2f} '.format(Aif1))
+print('Asup = {:1.2f} '.format(Asup))
+
+
 
 Apico  = Aif1 + Ainf + Asup 
 Avalle = Aif1 - Ainf  - Asup 
 
 m = (Apico - Avalle)/(Apico + Avalle)
-print(m)
+print('m = {:1.2f} '.format(m))
+
 ```
 
 9. Se re-sintoniza a $F_{rf} = 137 MHz$. Calcular el rechazo variando solamente $C_1$ y manteniendo constante $L_1$ (10 puntos)
@@ -547,7 +554,8 @@ C1a  = 1/(L1*wrfa**2)
 
 Qrfa  = Qrf*wrf/wrfa
 
-print(Qrfa, Qrf)
+print('Qrfa = {:1.2f} '.format(Qrfa))
+print('Qrf  = {:1.2f} '.format(Qrf))
 ```
 
 10. Idem 9, calcular el rechazo variando solamente $L_1$ y manteniendo constante $C_1$, comparar con el resultado anterior (10 puntos). 
@@ -565,7 +573,8 @@ L1b  = 1/(C1*wrfb**2)
 
 Qrfb  = Qrf*(wrf*L1)/(wrfb*L1b)
 
-print(Qrfb, Qrf)
+print('Qrfb = {:1.2f} '.format(Qrfb))
+print('Qrf  = {:1.2f} '.format(Qrf))
 ```
 
 ```{python}
