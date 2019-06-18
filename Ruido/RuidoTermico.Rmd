@@ -564,7 +564,7 @@ $$P = 4.14 \times 10^{-15} W $$
 
 Tanto el ruido térmico como el de disparo poseen densidades espectrales planas. Se define como ancho de banda equivalente de ruido de un sistema, al ancho de banda que debería tener un dispositivo ideal para producir en la salida la misma potencia de ruido. Esto re representa gráficamente en la siguiente imagen.
 
-<img src="fig/eqnb.png">
+<img src="./fig/eqnb.png">
 
 La potencia de ruido a la salida del dispositivo puede calcularse integrando la densidad espectral de potencia de ruido a la salida $N_{noise}*|H(f)|^2$ para todas las frecuencias, donde $|H(f)|^2$ es la ganancia de potencia en función de la frecuencia del dispositivo (puede ser un amplificador, un filtro o un mezclador). Esta potencia tiene que coincidir con la potencia a la salida de un filtro ideal de ancho de banda $B_{eq}$ y ganancia igual a la ganancia en frecuencia central $f_{c}$. Esto se expresa matemáticamente de esta forma:
 
