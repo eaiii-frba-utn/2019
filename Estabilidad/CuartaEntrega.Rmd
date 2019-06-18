@@ -81,15 +81,13 @@ def neutraliza(yt,wo,Cn, N):
     return (ytn,Nn)
 ```
 
-```{python}
-
-Image(filename= "fig/receptor.png",width=450)
-```
-
+<!-- #region -->
 El circuito de la figura corresponde a un receptor de Banda Aeronáutica ($118\,MHz$ a $137\,MHz$).  
-Está sintonizado para recibir una señal AM de portadora de  $F_c = 120\,MHz$ y
- modulado al 50\%  por un tono único de $1\,KHz$. 
- Los canales adyacentes se encuentran a $50\,KHz$ por arriba y debajo de la portadora de $120\,MHz$.
+Está sintonizado para recibir una señal AM de portadora de  $F_c = 120\,MHz$ y modulado al 50\%  por un tono único de $1\,KHz$. 
+Los canales adyacentes se encuentran a $50\,KHz$ por arriba y debajo de la portadora de $120\,MHz$.
+
+<img src="fig/receptor.png"  width="450">
+
 
 Una señal interferencia en la frecuencia imagen, con una amplitud $20\,dB$ por encima de la señal deseada (medida en bornes de antena), aparece a la entrada del detector $20\,dB$ por debajo de la deseada.
 
@@ -97,7 +95,6 @@ El receptor tiene una respuesta espuria en $119.09\,MHz$ con un rechazo de $60\,
 
 Suponer que todos los elementos activos (Amplificadores, mezclador y detector) son lineales y de parámetros constantes dentro de toda la banda de interés. 
 
-<!-- #region -->
 #### Circuitos
 
 Para el diseño de los circuitos considerar los siguientes parámetros. 
@@ -117,32 +114,16 @@ Todos los tanques están adaptados a transferencia de energía a Q constate. Par
 La antena presenta una impedancia $R_{a}= 50 \Omega$ en toda la banda de interés. 
 
 
+<img src="fig/RF.png"  width="450">
 
-
-<!-- #endregion -->
-
-```{python}
-Image(filename= "fig/RF.png",width=450)
-```
-
-<!-- #region -->
 Las bobinas empleadas para el amplificador de RF poseen : $Q_{oL} = 100$ y $N = 20$ espiras.
 Capacitores con $Q_{oC} = \infty$.
 
 
 #### Etapa 1IF.
 
+<img src="fig/primeraFI.png"  width="450">
 
-
-
-
-<!-- #endregion -->
-
-```{python}
-Image(filename= "fig/primeraFI.png",width=450)
-```
-
-<!-- #region -->
 Primera FI (Amplificador + filtro)  Dos  etapas dobles sintonizadas sincrónicas con acoplamiento crítico
 
 Para el cálculo de estabilidad suponer comportamiento de simple sintonizado, empleando la impedancia que presenta el doble sintonizado (similar a el cálculo de adaptación).
@@ -152,13 +133,9 @@ Capacitores con $Q_{oC} = \infty$.
 
 
 #### Etapa 2IF.
-<!-- #endregion -->
 
-```{python}
-Image(filename= "fig/segundaFI.png",width=450)
-```
+<img src="fig/segundaFI.png"  width="450">
 
-<!-- #region -->
 Segunda FI: 3 etapas Simple Sintonizadas en configuración Butterworth, con frecuencia central de $455\,KHz$ y ancho de  banda $10\,KHz$. 
 
 \section*{Ejercicio de estabilidad.}%*\arabic{NumeroDeEjercicio}}
@@ -183,10 +160,6 @@ Los parámetros del mezclador:
 | $R_{out}$ | Resistencia de salida   | 1   | $K\Omega$ |
 | $G_{c}$   | Ganancia de conversión  | 12  | dB        |
 
-
-<!-- #endregion -->
-
-<!-- #region -->
 ###  Determine
 
 1. Para la etapa de RF, $Qc$ de los sintonizados para cumplir con la condición de filtros sincrónicos y $Q_{c2} = 2 \cdot Q_{c1} $  .
@@ -233,7 +206,9 @@ $(\frac{fi}{fo}-\frac{fo}{fi})^2 = (\frac{98.6}{120}-\frac{120}{98.6})^2 = 0.156
 
 $ - 9999 + 5\cdot Q_1^2\cdot(0.1563) + 4\cdot Q_1^4\cdot(0.1563)^2 = 0$
 
+$Q1 =  17.77$
 
+$Q2 =  35.55$
 <!-- #endregion -->
 
 ```{python}
@@ -250,13 +225,50 @@ else    : x = (-b+ (b**2+4*a*c)**0.5 )/(2*a)
 Q1 = x**0.5
 Q2 = Q1 * 2
 
-print(Q1 ,  Q2)
+print('Q1 =  {:1.2f}'.format(Q1))
+print('Q2 =  {:1.2f}'.format(Q2))
 ```
 
+<!-- #region -->
 2. Dado que el transistor es potencialmente inestable ($C= 6.62$, coeficiente de Linvill), se propuso una red de neutralización. Calcular el número de espiras de la red de neutralización. Calcular los parámetros resultantes (transistor y red de neutralización) y el coeficiente de Stern resultante para la condición de máxima transferencia de energía a Q constante.
 
+Linvil:
+$$ C = \frac{| y_{t12} \cdot y_{t21} | +\Re(y_{t12} \cdot y_{t21})}{2 \cdot \Re(y_{t11}) \cdot \Re(y_{t22})}$$
+
+$C= 6.62$
+
+Numero de vueltas del secundario, 
+
+$$ Nn = \frac{- \Im(y_{t12})}{\omega_o \cdot C_n }\cdot N$$
+
+Cuadripolo para neutralizar el transistor:
+
+$y_{n11} = j \cdot \omega_o \cdot C_n$
+
+$y_{n12} = j \cdot \omega_o \cdot C_n \cdot \frac{Nn}{N}$
+
+$y_{n21} = j \cdot \omega_o \cdot C_n \cdot \frac{Nn}{N}$
+
+$y_{n22} = j \cdot \omega_o \cdot C_n \cdot (\frac{Nn}{N})^2$
+
+Cuadripolo resultante
+
+$$y_{tn}  = y_{t} + y_{n}$$
+
+$y_{tn11} = 0.0020 S +0.013j S$
+
+$y_{tn12} = -0.0001 S +0.j S$
+
+$y_{tn21} = 0.0300 S -0.019jS$
+
+$y_{tn22} = 0.0005 S +0.0022jS$
 
 
+Stern para máxima transferencia de energía:  
+
+$$ K = \frac{2 \cdot \Re(y_{tn11} + y_{tn11}) \cdot \Re(y_{tn22}+ y_{tn22})}{| y_{tn12} \cdot y_{tn21} | +\Re(y_{tn12} \cdot y_{tn21})} =14.52$$
+
+<!-- #endregion -->
 
 ```{python}
 fo = 120e6
@@ -298,48 +310,55 @@ Image(filename= "fig/RF.png",width=450)
 ```
 
 ```{python}
-Qo = 100
-ro = 1/ytn[1,1].real 
+Qo   = 100                    # Q libre de los inductores
+Ne   = 20                     # Numero de esperas total de los inductores
+rl   = 1e3                    # Resistencia carga
+rg   = 50                     # Resistencia del generador
 
-L1 = (1/Q2-1/Qo)*(ro/2)/wo
+r11 =  1/ytn[0,0].real        # r11 
+r22   = 1/ytn[1,1].real       # r22
 
-C1 = 1/(wo**2*L1)
+# Sintonizado de salida
+rext = r22/2                  # Rexterna 
+L1 = (1/Q2-1/Qo)*(rext/2)/wo  # Inductor 
+C1 = 1/(wo**2*L1)             # Cap de sintonia 
 
 # divisor Cap
-
-Qm2 = ro * wo * C1
-
-print(Qm2)
-
-N = (ro/1e3)**0.5
-Qm1 = Qm2/N
-
-print(Qm1)
+Qm2   = r22 * wo * C1
+#print(Qm2)
+N     = (r22/rl)**0.5
+Qm1   = Qm2/N
+#print(Qm1)
 
 C3 = C1*N
 C2 = C1*N/(N-1)
 
-print(C1,C3,C2)
+print('C1 =  {:1.2e}F'.format(C1))
+print('C2 =  {:1.2e}F'.format(C2))
+print('C3 =  {:1.2e}F'.format(C3))
 
-rt = 2/( (1/Q1-1/Qo)/(L1*wo))
+# Sintonizado de  entrada
+rt = 2/( (1/Q1-1/Qo)/(L1*wo)) # Resistencia a tope de bobina
 
 # 50/rt = (N1/N)^2
-
-N1 = (50/rt)**0.5 * 20
-
-print(N1)
-
-ri =  1/ytn[0,0].real
-
-N2 = (ri/rt)**0.5 * 20 - N1
-
-print(N2)
-
+N1 = (rg/rt)**0.5  * Ne
+N2 = (r11/rt)**0.5 * Ne - N1
+print('N1 =  {:1.2f}'.format(N1))
+print('N2 =  {:1.2f}'.format(N2))
 
 ```
 
 4. Proponga alguna modificación para que la red sea de unilateralización, calcule los componentes y el coeficiente de Stern resultante.
 
+Un analisis similar al empleado para el neutralizador, con el que se obtiene:
+
+$y_{n11} = j \cdot \omega_o \cdot C_n$
+
+$y_{n12} = j \cdot \omega_o \cdot C_n \cdot \frac{Nn}{N}$
+
+$y_{n21} = j \cdot \omega_o \cdot C_n \cdot \frac{Nn}{N}$
+
+$y_{n22} = j \cdot \omega_o \cdot C_n \cdot (\frac{Nn}{N})^2$
 
 
 ```{python}
