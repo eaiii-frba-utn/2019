@@ -420,14 +420,14 @@ rpL1 = Qolrf * L1 * wrf
 
 rt  = (r11p*rpL1)/(r11p+rpL1)
 
-rin = rt*(N1/Nrf)**2
+rinRF = rt*(N1/Nrf)**2
 
 
 # Resistencia de carga
-rl  = 1/yinmix.real
+rinMIX  = 1/yinmix.real
 
 # Ganancia de potencia de RF
-Grf = Avrf**2 * (rin/rl)
+Grf = Avrf**2 * (rinRF/rinMIX)
 
 print('|Grf| = {:1.2f} '.format(Grf))
 
@@ -448,13 +448,13 @@ r11p = r11*(nc)**2
 rpL2 = Qolif * L2 * wif 
 
 
-rin  = (r11p*rpL2)/(r11p+rpL2)
+rinIF  = (r11p*rpL2)/(r11p+rpL2)
 
 
 rl  = rdet
 
 # Ganancia de potencia de IF
-Gif = Avif**2 * (rin/rl)
+Gif = Avif**2 * (rinIF/rl)
 
 print('|Gif| = {:1.2f} '.format(Gif))
 
@@ -472,7 +472,9 @@ print('|Gif| = {:1.2f} dB'.format(10*np.log10(abs(Gif)  )))
 rin  = 1/yinmix.real
 ro   = 1/youtmix.real
 
-Gmix = Avmix**2 * (rin/rl)
+ 
+
+Gmix = Avmix**2 * (rin/rinIF)
 
 print('|Gmix| = {:1.2f} '.format(Gmix))
 
@@ -575,6 +577,62 @@ Qrfb  = Qrf*(wrf*L1)/(wrfb*L1b)
 
 print('Qrfb = {:1.2f} '.format(Qrfb))
 print('Qrf  = {:1.2f} '.format(Qrf))
+```
+
+Se desea que $R_s  = 10 \Omega$, se vea a la entrada como $R_p  = 1000 \Omega$    
+
+La conversión serie paralelo de una resistencia:
+$R_p = R_s \cdot (1 + Q_m^2 ) $
+
+Entonces, $Q_m$:
+
+$Q_m = \sqrt{\frac{R_p}{R_s} - 1} $
+
+Para un circuito serie:
+
+$Q_m = \frac{w_o \cdot L_s}{R_s} $
+
+y para un circuito paralelo:
+
+$Q_m = \frac{R_p}{w_o \cdot L_p} $
+
+Si calculamos $L_s$:
+
+$L_s = \frac{Q_m \cdot R_s}{w_o} $
+
+La $r_p$ del inductor:
+
+$r_p = \frac{w_o \cdot L_s}{Q_o} $
+
+Entonces, $L_p$:
+
+$L_p = L_s \cdot (1 + \frac{1}{Q_m^2} ) $
+
+Por último, el $C$:
+
+$C = \frac{1}{w_o^2 \cdot L_p} $
+
+
+
+```{python}
+fo = 100e6
+wo = 2*np.pi*fo
+Rs = 10
+Rp = 1000 
+Qo = 100
+
+Qm = (Rp/Rs -1 )**(1/2)
+Ls  = Rs*Qm/wo
+rp  = Ls*wo/Qo
+print('.param rp= {:3.3e}'.format(rp) )
+
+Lp  = Ls*(1+1/Qm**2)
+
+print('.param L= {:3.3e}'.format(Ls) )
+
+C  = 1/(wo**2*Lp)
+print('.param C= {:3.3e}'.format(C) )
+
 ```
 
 ```{python}
