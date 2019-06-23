@@ -147,6 +147,7 @@ Encontrar el índice de modulación (m) de la señal a la entrada del detector a
 ```{python}
 # Datos
 frf    = 118e6 #Hz
+fm     = 15e3 #Hz 
 AttRF = 55 #dB
 BWif  = 50e3 #Hz
 
@@ -170,7 +171,7 @@ y22rf = 0.2e-3 + 1j * 8e-3
 # Transistor IF 
 y11if = 1e-3 + 1j * 0.2e-3
 y12if = 0
-y21if = 40e-3 - 1j * 2
+y21if = 40e-3 - 1j * 2e-3
 y22if = 0.1e-3 + 1j * 0.4e-3
 
 # Mezclador 
@@ -504,11 +505,11 @@ fif1  = fosc1 - frf
 print('Frecuencia de la portadora en IF: {:1.4e} MHz'.format(fif1) )
 
 # Banda inferior
-fif1inf = fif1 - 15e3 
+fif1inf = fif1 - fm
 print('Frecuencia de la frecuencia inferior en IF: {:1.4e} MHz'.format(fif1inf) )
 
 # Banda inferior
-fif1sup = fif1 + 15e3 
+fif1sup = fif1 + fm 
 print('Frecuencia de la frecuencia superior en IF: {:1.4e} MHz'.format(fif1inf) )
 
 # Calculo de la respuesta del filtro de IF 
@@ -521,18 +522,25 @@ Aif1 = 1/(1+Qif**2 * (fif1/fif - fif/fif1)**2)**(NetIF/2)
 Asup = 1/(1+Qif**2 * (fif1sup/fif - fif/fif1sup)**2)**(NetIF/2)
 
 
+print('Ganancias:')
 print('Ainf = {:1.2f} '.format(Ainf))
 print('Aif1 = {:1.2f} '.format(Aif1))
 print('Asup = {:1.2f} '.format(Asup))
 
+Vinf = Ainf*0.25
+Vif1 = Aif1*1.00
+Vsup = Asup*0.25
 
+print('Respuestas:')
+print('Vinf = {:1.2f} '.format(Vinf))
+print('Vif1 = {:1.2f} '.format(Vif1))
+print('Vsup = {:1.2f} '.format(Vsup))
 
-Apico  = Aif1 + Ainf + Asup 
-Avalle = Aif1 - Ainf  - Asup 
+Vpico  = Vif1 + Vinf  + Vsup
+Vvalle = Vif1 - Vinf  - Vsup
 
-m = (Apico - Avalle)/(Apico + Avalle)
+m = (Vpico - Vvalle)/(Vpico + Vvalle)
 print('m = {:1.2f} '.format(m))
-
 ```
 
 9. Se re-sintoniza a $F_{rf} = 137 MHz$. Calcular el rechazo variando solamente $C_1$ y manteniendo constante $L_1$ (10 puntos)
