@@ -83,7 +83,7 @@ $$ a_0 = \frac{2}{T} \int_{t_0}^{t_0+T}  f(t) dt$$
 
 $$ a_n = \frac{2}{T} \int_{t_0}^{t_0+T}  f(t) \cos{{\omega_n}{t}} dt$$ 
 
-$$ b_n=\frac{2}{T} \int_{t_0}^{t_0+T} f(t) \sin {{\omega_n}{t}} dt$$
+$$ b_n=\frac{2}{T} \int_{t_0}^{t_0+T} f(t) \sin{{\omega_n}{t}} dt$$
 
 
 
