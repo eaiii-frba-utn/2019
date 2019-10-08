@@ -148,16 +148,16 @@ freq = Frequency(10,200,11,'mhz')
 ```
 
 ```{python}
-fo = 50e6
+fo = 200e6
 wo = 2*np.pi*fo
 
-print('Parametros S 50MHz (3V10mA):')
+print('Parametros S 200MHz (3V10mA):')
 
-printS(BFP720['50mhz'].s[0])
+printS(BFP720['200mhz'].s[0])
 print(' ')
 
-print('Parametros Y 50MHz (3V10mA):')
-Y100 = BFP720['50mhz'].y[0]
+print('Parametros Y 10MHz (3V10mA):')
+Y100 = BFP720['10mhz'].y[0]
 
 printY(Y100)
 ```
@@ -177,11 +177,11 @@ Linvill(ytn)
 ```
 
 ```{python}
-yg = (1/50 ) - 1.05E-03j
+yg = (1/49 ) - 1.05E-03j
 print(1/(1.05E-03*wo) )
 print((1.05E-03/wo) )
 
-yl= (1/75 ) - 3.78E-04j
+yl= (1/40 ) - 3.78E-04j
 print(1/(3.78E-04*wo) )
 print(3.78E-04/wo) 
 
