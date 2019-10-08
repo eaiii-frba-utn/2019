@@ -1,0 +1,63 @@
+* Z:\home\aalmela\scm\git\utn\eaiii\2019\proyecto\FiltroSintonia\filtro_Tee_tuning.asc
+L1 N003 N004 {Lr}
+L2 N004 N005 {Lr} Rpar={rpr}
+L3 N004 N012 {Lc}
+R1 N001 s 1k
+C1 0 N001 10n
+C2 0 N002 10n
+R2 N002 s 1k
+R3 N001 N008 10k
+R4 N002 N009 10k
+R5 N014 d 1k
+C3 0 N014 10n
+R6 N011 N014 10k
+R7 N015 d 1k
+C4 0 N015 10n
+R8 N013 N015 10k
+R9 N010 0 10k
+R10 N007 0 10k
+C5 N007 i 10n
+C6 o N010 10n
+R11 o 0 {rl}
+R12 i N006 {rs}
+V1 N006 0 AC 100u
+V2 s 0 {V1}
+V3 d 0 {V2}
+XU1 N007 N008 SMVDIODE Cjo={Cjo1} M={M1} Vj={Vj1} R={Rs1} Ls={Ls1} Cp={Cp1}
+XU2 N003 N008 SMVDIODE Cjo={Cjo1} M={M1} Vj={Vj1} R={Rs1} Ls={Ls1} Cp={Cp1}
+XU3 N005 N009 SMVDIODE Cjo={Cjo1} M={M1} Vj={Vj1} R={Rs1} Ls={Ls1} Cp={Cp1}
+XU4 N010 N009 SMVDIODE Cjo={Cjo1} M={M1} Vj={Vj1} R={Rs1} Ls={Ls1} Cp={Cp1}
+XU5 N003 N011 SMVDIODE Cjo={Cjo2} M={M2} Vj={Vj2} R={Rs2} Ls={Ls2} Cp={Cp2}
+XU6 0 N011 SMVDIODE Cjo={Cjo2} M={M2} Vj={Vj2} R={Rs2} Ls={Ls2} Cp={Cp2}
+XU7 N005 N013 SMVDIODE Cjo={Cjo2} M={M2} Vj={Vj2} R={Rs2} Ls={Ls2} Cp={Cp2}
+XU8 0 N013 SMVDIODE Cjo={Cjo2} M={M2} Vj={Vj2} R={Rs2} Ls={Ls2} Cp={Cp2}
+R13 N004 N003 {rpr}
+R14 N005 N004 {rpr}
+R15 N012 0 {rpc}
+.param Lc   =  8.12e-09
+.param rpc =  0.1
+.param Lr   =  2.73e-07
+.param rpr =  6728.2
+.param rs    =  50.000
+.param rl    =  50.000
+.param Cjo1  =  5.18e-11
+.param M1    =  48.70
+.param Vj1   =  73.60
+.param Ls1   =  1.40e-09
+.param Rs1    =  1.100
+.param Cp1   =  2.70e-12
+.param Cjo2  =  2.89e-11
+.param M2    =  105.00
+.param Vj2   =  190.00
+.param Ls2   =  1.50e-09
+.param Rs2    =  1.400
+.param Cp2   =  2.20e-12
+.ac dec 1000 40e6 240e6
+;tran 0.1
+* .param V1 =  1.743\n.param V2 =  2.651
+* .param V1 =  2.588\n.param V2 =  3.851
+.param V1 =  3.370
+.param V2 =  5.128
+.lib C:\Program Files\LTC\LTspiceXVII\lib\sym\MyComponents\smvdiode.cir
+.backanno
+.end
