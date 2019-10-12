@@ -21,7 +21,7 @@ from scipy import signal
 from IPython.display import Image  
 # %matplotlib inline
 params = {'legend.fontsize': 24,
-          'figure.figsize': (10, 10),
+          'figure.figsize': (8, 8),
          'axes.labelsize': 24,
          'axes.titlesize': 24,
          'xtick.labelsize':24,
@@ -33,44 +33,39 @@ plt.rcParams.update(params)
 <!-- #region -->
 #### Ejercicio 1
 
-El circuito de la figura corresponde amplificador "clase C" realizado con un MOSFET, para una portadora de 1 MHz.
+El circuito de la figura corresponde amplificador "clase C" realizado con un MOSFET, para una portadora de 10 MHz.
 
 <img src="./fig/circuito1.png">
 
-
-$V_{GS} =  20 V $
-
-$V_{GG} =  -10 V $
-
-
+Para este proyecto se busca máxima excursión de señal, y el ángulo de circulación de corriente de Drain debe ser $\theta  = 120$ . 
 
 Se asume la impedancia del dispositivo a su salida entre  Drain  y Source es lo suficientemente elevada como para desestimarla frente a la carga.
 
 |Symbol        | Parameter                  | Value | Unit |   
 |--------------|----------------------------|-------|------|
-|$V_{(BR)DSS}$ |  Drain source voltage      | 200   | V    |
+|$V_{(BR)DSS}$ |  Drain source voltage      | 150   | V    |
 |$V_{GS}     $ |  Gate source voltage       | 100   | V    |
 |$I_{D}      $ |  Drain current             | 10    | A    |
 |$V_{(min)DS}$ |  Drain source voltage min. | 10    | V    |
 
 La tensión de excitación en Gate es absolutamente senoidal.
 
-<img src="./fig/vgs_id_1.png"> 
+<img src="./fig/vgs_id_2.png"> 
 
 
-El Q cargado de ambos tanques (Gate y  Drain) es de $10$ .
+El Q cargado de ambos tanques (Gate y  Drain) es de $10$ y el  $Q_{oL}$ de las bobinas es 100. 
 
 Determinar:
 
-   1. ángulo de circulación $\theta$
+   1. $V_{GG}$ y $V_{s}$ ( valor pico de la componente alterna de la excitación).
    2. Valores instantaneos de $i_d$.
    3. $I_{do}$, $I_{d1}$, $I_{d2}$ e $I_{d3}$.
    4. $R_L$, $L_2$ y $C_2$. ¿Es esta una adaptación a MTE con Q constante?.
    5. $P_{dc}$ .
    6. $P_{RL}$ .
    7. $P_{MOSFET}$ y rendimiento.
-   8. $P_{RL}$ de sengunda armonica.
-   9. Determinar el valor de VGG tal que se tengan $50$ W en la resistencia de carga $RL$ .
+   8. Relacion de 2 respecto a la fundamental sobre la carga.
+   9. Relacion de 3 respecto a la fundamental sobre la carga.
 
 
 
@@ -80,31 +75,38 @@ Determinar:
 
 ```{python}
 #parametros de la senal 
-fc = 1e6
+fc = 10
+th_c = 120
+#tiempo de un periodo 
+Tc  = 1/fc
 
 # muestreo (empleando 24 ya que corresponde a el muestreo del empleado comunmente en el metodo de los trapecios)
 ns  = 24       
+fs  =  fc*ns
+ds  = 1/(fs)
+
 #parametros del filtro de salida
+Qo = 100
 Qc = 10
 
 #parametros del transistor
 Vds_min = 10 
-Vds_max = 200
-
-Vs  =  20.00 
-VGG = -10.00
+Vds_max = 150
 ```
 
-# 1.ángulo de circulación $\theta$
+# 1. $V_{GG}$ y $V_{s}$
 
+Para máxima excursión de la señal y un ángulo de circulación de 120 grados, podemos plantear el siguiente sistema de ecuaciones:
+
+$ VGG + Vs = 15 $
+
+$ VGG + Vs\cdot cos(120) = 0 $
 
 
 ```{python}
-thc = np.arccos( (2-VGG)/Vs )
-
-print(' th = {:.2f}'.format(thc*180/np.pi ))
-
-print(thc)
+Vs  = 15 /(1-np.cos(th_c/2*np.pi/180))
+VGG = 15 - Vs
+print(' Vs = {:.2f}, VGG = {:.2f}'.format(Vs,VGG))
 ```
 
 ```{python}
@@ -116,7 +118,6 @@ vgs = list()
 vgs = (vgsi(VGG, Vs, thi))
 
 plt.plot(thi,vgs, 'bo-')
-plt.plot(thi,[2 for t in thi] , 'r-')
 plt.xlabel('rad')
 plt.ylabel('Vgs [V]')
 plt.grid()
@@ -131,13 +132,13 @@ plt.show()
 def idi(v):
     i = list()
     for vi in v:
-        if (vi < 2.)                : i.append(0.)
-        elif (vi >= 2  and vi < 7) : i.append((2.)*(vi-2.)) 
+        if (vi < 0.)                : i.append(0.)
+        elif (vi >= 0  and vi < 15) : i.append((10./15.)*(vi-0.)) 
         else                        : i.append(10.) 
     return np.array(i)
 
 # Plot de la transferencia del MOSFET
-vs  = np.arange(-1.,8.,0.1)
+vs  = np.arange(-5.,20.,0.2)
 ids = idi(vs)
 
 plt.plot(vs,ids,'ro')
@@ -152,7 +153,7 @@ plt.plot(thi,ids,'g')
 #plt.axis([-10, 10, -1, 11])
 plt.ylabel('ID')
 plt.xlabel('VGS')
-plt.grid(minors)
+plt.grid()
 plt.show()
 
 for p,i in zip(thi,idi(vgs)):
@@ -166,19 +167,18 @@ Tabla de calculos para el metodo de los trapecios
 
 | $\theta_m(i)$  |$vgs(\theta_m)$ |  $id(\theta_m)$ | $id(\theta_m) \cdot cos(\theta_m) $ |$id(\theta_m) \cdot cos(2 \theta_m) $ |$id(\theta_m) \cdot cos(3 \theta_m) $ |
 |----|----|----|----|----|----|
-|0.00| 10.00| 10.00| 10.00| 10.00 |
-|15.00| 9.32| 9.15| 8.84| 7.92 |
-|30.00| 7.32| 6.65| 5.76| 3.33 |
-|45.00| 4.14| 2.68| 1.89| -0.00 |
+|0.00| 15.00| 10.00| 10.00| 10.00 |
+|15.00| 13.98| 9.32| 9.00| 8.07 |
+|30.00| 10.98| 7.32| 6.34| 3.66 |
+|45.00| 6.21| 4.14| 2.93| -0.00 |
 |60.00| -0.00| 0.00| 0.00| -0.00 |
-|75.00| -4.82| 0.00| 0.00| -0.00 |
-|90.00| -10.00| 0.00| -0.00| -0.00 |
-|105.00| -15.18| 0.00| -0.00| -0.00 |
-|120.00| -20.00| 0.00| -0.00| -0.00 |
-|135.00| -24.14| 0.00| -0.00| 0.00 |
-|150.00| -27.32| 0.00| -0.00| 0.00 |
-|165.00| -29.32| 0.00| -0.00| 0.00 |
-
+|75.00| -7.24| 0.00| 0.00| -0.00 |
+|90.00| -15.00| 0.00| -0.00| -0.00 |
+|105.00| -22.76| 0.00| -0.00| -0.00 |
+|120.00| -30.00| 0.00| -0.00| -0.00 |
+|135.00| -36.21| 0.00| -0.00| 0.00 |
+|150.00| -40.98| 0.00| -0.00| 0.00 |
+|165.00| -43.98| 0.00| -0.00| 0.00 |
 
 ###   Componente de continua $I_{do}$
 
@@ -196,9 +196,9 @@ Aplicando metodo de los trapecios:
 
 $I_{do} = \frac{1}{12} [ \frac{id(0)}{2} +id(15) +id(30) +id(45)+ id(60) +id(75) + id(90) id(105) +id(120) +id(135) +id(150) +id(165)   ]$
 
-$I_{do} = \frac{1}{12} [ \frac{10}{2} +9.15 +6.65 +2.68 + 0 ]$
+$I_{do} = \frac{1}{12} [ \frac{10}{2} +9.32 +7.32 +4.14 + 0 ]$
 
-$I_{do} = 1.956 A$
+
 
 ###   Componente de fundamental $I_{d1}$
 
@@ -222,27 +222,22 @@ $I_{d1} = \frac{1}{6} [ \frac{id(0)}{2} +id(15)\cdot cos(15) +id(30) \cdot cos(3
 
 $I_{d1} = \frac{1}{6} [ \frac{10}{2} +9.00 +6.34 +2.93 + 0 ]$
 
-$I_{d1} = 3.582A$
 
-###   Componente de segundo armonico $I_{d2}$
+###   Componente de fundamental $I_{d1}$
 
 De igual manera: 
 
 $I_{d2} = \frac{1}{6} [ \frac{id(0)}{2} +id(15)\cdot cos(2 \cdot 15) +id(2 \cdot 30) \cdot cos(2 \cdot 30) +id(2 \cdot 45) \cdot cos(2 \cdot 45)+ id(60) \cdot cos(2 \cdot 60) +id(75) \cdot cos(2 \cdot 75) + id(90) \cdot cos(2 \cdot 90)  ]$
 
-$I_{d2} = \frac{1}{6} [ \frac{10}{2} +8.84 +5.76 +1.89 + 0 ]$
-
-$I_{d2} = 2.708 A$
+$I_{d2} = \frac{1}{6} [ \frac{10}{2} +9.00 +6.34 +2.93 + 0 ]$
 
 
 ###   Componente de fundamental $I_{d3}$
 
-$I_{d3} = \frac{1}{6} [ \frac{id(0)}{2} +id(15)\cdot cos(3 \cdot 15) +id(3 \cdot 30) \cdot cos(3 \cdot 30) +id(3 \cdot 45) \cdot cos(3 \cdot 45)+ id(60) \cdot cos(3 \cdot 60) +id(75) \cdot cos(3 \cdot 75) + id(90) \cdot cos(3 \cdot 90)  ]$
+$I_{d2} = \frac{1}{6} [ \frac{id(0)}{2} +id(15)\cdot cos(3 \cdot 15) +id(3 \cdot 30) \cdot cos(3 \cdot 30) +id(3 \cdot 45) \cdot cos(3 \cdot 45)+ id(60) \cdot cos(3 \cdot 60) +id(75) \cdot cos(3 \cdot 75) + id(90) \cdot cos(3 \cdot 90)  ]$
 
-$I_{d3} = \frac{1}{6} [ \frac{10}{2} +7.92 +3.33  + 0 ]$
+$I_{d1} = \frac{1}{6} [ \frac{10}{2} +8.07 +3.66  + 0 ]$
 
-
-$I_{d3} = 1.596 A$
 <!-- #endregion -->
 
 ```{python}
@@ -252,10 +247,8 @@ for i,p in enumerate(thi):
         print('|{:1.2f}| {:1.2f}| {:1.2f}| {:1.2f}| {:1.2f} |'.format( 
             p*180/np.pi, vgs[i], ids[i], ids[i]*np.cos(p) , ids[i]*np.cos(2*p), ids[i]*np.cos(3*p)   ) ) 
         
-     
-```
-
-```{python}
+        
+        
 # Continua
 idco = 1/ns * np.sum(ids) 
 
@@ -269,26 +262,20 @@ idc2 = 2/ns * np.sum([ids[i]*np.cos(2*thi[i]) for i in range(ns)] )
 # segundo arminico
 idc3 = 2/ns * np.sum([ids[i]*np.cos(3*thi[i]) for i in range(ns)] ) 
 
-print('idco= {:.3f} A, idc1={:.3f} A, idc2={:.3f} A, idc3={:.3f} A '.format(idco,idc1,idc2,idc3) )        
+print('idco= {:.2f} A, idc1={:.2f} A, idc2={:.2f} A, idc3={:.2f} A '.format(idco,idc1,idc2,idc3) )        
 ```
 
 # 4. $R_L$, $L_2$ y $C_2$. ¿Es esta una adaptación a MTE con Q constante?.
 
 ```{python}
 #calculo de la resistencia de carga de salida teniendo la portadora en pico para el primer armonico de la modulante
-VDD = 100 
-VRL = (VDD -Vds_min )  
+
+VRL = (Vds_max -Vds_min ) /2 
+VDD = Vds_max - VRL
 RL  = VRL / idc1 
 
-print('RL= {:.2f} ohm, VRL={:.2f} V'.format(RL,VRL) )
+print('RL= {:.2f} ohm, VDD={:.2f} V'.format(RL,VDD) )
 
-```
-
-```{python}
-L = RL / (2*np.pi*fc*Qc)
-C = 1 / ((2*np.pi*fc)**2 * L)
-print('L = {:.2e} Hy'.format(L)  )
-print('C = {:.2e} F'.format(C)  )
 ```
 
 # 5. $P_{dc}$ .
@@ -305,7 +292,7 @@ print('PDC= {:.2f} W'.format(PDC) )
 #  6. $P_{RL}$ .
 
 ```{python}
-PRL = idc1 * VRL / 2
+PRL = idc1 * VDD / 2
 
 
 print('PRL={:.2f} W'.format(PRL) )
@@ -323,37 +310,7 @@ neff = PRL/PDC
 print('rendimiento = {:.2f} '.format(neff)  )
 ```
 
-# 8. $P_{RL}$ de sengunda armonica.
-
-Estos pulsos de corriente son filtrados por un simple sintonizado. 
-
-La componente de segunda armonica entonces debe ser filtrada. 
-
-```{python}
-A = 1/(1+ Qc**2 * (2*fc/fc - fc/(fc*2) )**2 )**(1/2)
-
-VD2 =  (A*idc2*RL)
-
-print(VD2)
-
-PRL2 = VD2**2/2/RL 
-
-print('PRL2={:.2f} W'.format(PRL2) )
-
-```
-
-# 9. Determinar el valor de VGG tal que se tengan $50$ W en la resistencia de carga $RL$ .
-
-
-```{python}
-PRLo =   50                  # Potencia en la carga
-VRLo = (PRLo*2*RL)**(1/2)    # Tensión sobre RL
-id1o = VRLo/RL               # Componente fundamental de la corriente en la carga
-print(VRL, id1o)
-
-
-
-```
+Estos pulsos de corriente son filtrados por un simple sintonizado 
 
 ```{python}
 

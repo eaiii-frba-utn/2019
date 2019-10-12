@@ -14,7 +14,10 @@ jupyter:
 
 #### Ejercicio 2
 
-El circuito de la figura corresponde amplificador "clase C" realizado con un MOSFET, para una portadora de 10 MHz.
+El circuito de la figura corresponde amplificador "clase C" realizado con un MOSFET, para una portadora de 10 
+MHz.
+
+<img src="./fig/circuito1.png">
 
 Para este proyecto se busca máxima excursión de señal, y el ángulo de circulación de corriente de Drain debe ser $\theta$  = 120º . 
 
@@ -42,7 +45,6 @@ params = {'legend.fontsize': 24,
 plt.rcParams.update(params) 
 
 
-Image(filename= "claseC.png",width=550)
 ```
 
 ```{python}

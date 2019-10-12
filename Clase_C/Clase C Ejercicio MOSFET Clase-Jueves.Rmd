@@ -21,7 +21,7 @@ from scipy import signal
 from IPython.display import Image  
 # %matplotlib inline
 params = {'legend.fontsize': 24,
-          'figure.figsize': (10, 10),
+          'figure.figsize': (8, 8),
          'axes.labelsize': 24,
          'axes.titlesize': 24,
          'xtick.labelsize':24,
@@ -55,7 +55,7 @@ Se asume la impedancia del dispositivo a su salida entre  Drain  y Source es lo 
 
 La tensión de excitación en Gate es absolutamente senoidal.
 
-<img src="./fig/vgs_id_1.png"> 
+<img src="./fig/vgs_id_2.png"> 
 
 
 El Q cargado de ambos tanques (Gate y  Drain) es de $10$ .
@@ -132,12 +132,12 @@ def idi(v):
     i = list()
     for vi in v:
         if (vi < 2.)                : i.append(0.)
-        elif (vi >= 2  and vi < 7) : i.append((2.)*(vi-2.)) 
+        elif (vi >= 2  and vi < 10) : i.append((10./8.)*(vi-2.)) 
         else                        : i.append(10.) 
     return np.array(i)
 
 # Plot de la transferencia del MOSFET
-vs  = np.arange(-1.,8.,0.1)
+vs  = np.arange(-5.,20.,0.2)
 ids = idi(vs)
 
 plt.plot(vs,ids,'ro')
@@ -152,7 +152,7 @@ plt.plot(thi,ids,'g')
 #plt.axis([-10, 10, -1, 11])
 plt.ylabel('ID')
 plt.xlabel('VGS')
-plt.grid(minors)
+plt.grid()
 plt.show()
 
 for p,i in zip(thi,idi(vgs)):
