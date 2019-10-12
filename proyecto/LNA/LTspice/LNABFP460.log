@@ -2,8 +2,8 @@ Circuit: * Z:\home\aalmela\scm\git\utn\eaiii\2019\proyecto\LNA\LTspice\LNABFP460
 
 Direct Newton iteration for .op point succeeded.
 
-Date: Tue Oct 08 18:59:09 2019
-Total elapsed time: 0.055 seconds.
+Date: Fri Oct 11 14:21:41 2019
+Total elapsed time: 0.060 seconds.
 
 tnom = 25
 temp = 27
