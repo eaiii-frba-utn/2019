@@ -58,7 +58,7 @@ $$   k_B \; \approx \; 1,38064852 \times 10^{-23}  J/K $$
 Si queremos encontrar la potencia de ruido generada en un ancho de banda B, solo debemos multiplicar 
 la densidad espectral de potencia por el mismo. Por lo tanto, el valor cuadrático medio de la tensión en el resistor esta dado por por:
 
-$$ {\bar{v_{n}^2}} = \frac{4 k_B T R B}{e^{\frac{hf}{KT}-1}} $$
+$$ {\bar{v_{n}^2}} = \frac{4 hf  R B}{e^{\frac{hf}{KT}-1}} $$
 
 Donde 
 

@@ -477,6 +477,14 @@ yg = (ytn[0,0].real-ytn[0,0].imag*1j)
 
 
 
+
+Butterworth con $n$ simples sintonizados, donde $m$ es de $1$ a $n$
+
+$$Q_{m} =\frac{f_o}{BW} \frac{1}{sin(\frac{2 \cdot m-1}{2n}\pi)}  $$
+
+$$f_{m} = f_o + \frac{BW}{2} cos(\frac{2\cdot m-1}{2n}\pi) $$
+
+
 ```{python}
 fo = 455e3
 wo = 2*np.pi*fo
@@ -525,10 +533,11 @@ Linvill(yt)
 
 ```{python}
 fca = fo + 50e3 
-
+print(Q1,Q2,Q3)
+print(f1,f2,f3)
 A1 = 1/(1+Q1**2*(fca/f1-f1/fca )**2 )**0.5
-A2 = 1/(1+Q1**2*(fca/f2-f2/fca )**2 )**0.5
-A3 = 1/(1+Q1**2*(fca/f3-f3/fca )**2 )**0.5
+A2 = 1/(1+Q2**2*(fca/f2-f2/fca )**2 )**0.5
+A3 = 1/(1+Q3**2*(fca/f3-f3/fca )**2 )**0.5
 
 A = A1 * A2 * A3
 print('A =  {:1.2e}'.format(A))
@@ -539,6 +548,38 @@ print('A  =  {:1.2f}dB'.format(20*np.log10(A)))
 ```{python}
 
 ```
+
+<!-- #region -->
+
+<img src="fig/potencias.png"  width="450">
+
+
+$P_{L}=$ Potencia entregada a la carga
+
+$P_{in}=$ Potencia entregada al cuadripolo cargado
+
+$P_{as}=$ Potencia disponible en el generador
+
+$P_{as}= \frac{\bar{v_s}}{4 \cdot r_g} $ ($\bar{v_s}$ valor RMS)
+
+$P_{as}= \frac{\bar{i_s}\cdot r_g}{4 } $ ($\bar{i_s}$ valor RMS)
+
+$P_{an}=$ Potencia disponible a la salida del cuadripolo
+
+Definimos (demostracion Pozar, pag. 606):
+
+Ganancia de potencia:
+
+$G = \frac{P_L}{P_{in}} $ 
+
+Ganancia disponible:
+
+$ G_A = \frac{P_{an}}{P_{as}}$
+
+Ganancia de transduccion:
+
+$ G_T = \frac{P_L}{P_{as}}$
+<!-- #endregion -->
 
 ```{python}
 

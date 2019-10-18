@@ -416,10 +416,6 @@ K = Stern(yg, yl, ytn)
 ```
 
 ```{python}
-
-```
-
-```{python}
 ## Componentes para LTspice
 N   = 20
 rp   = Qo *   2*np.pi*fo * L
