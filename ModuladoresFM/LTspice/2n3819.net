@@ -1,0 +1,14 @@
+* Z:\home\aalmela\scm\git\utn\eaiii\2019\ModuladoresFM\LTspice\2n3819.asc
+J1 N002 N003 N004 2N3819
+V1 N001 0 PWL(0 0 1 10)
+R2 N003 0 10
+L1 N001 N002 100µ
+V2 N004 N005 PWL(0 0 1 10) AC 100u
+V3 N005 0 SINE(0 0 10) AC 100u
+.model NJF NJF
+.model PJF PJF
+.lib C:\users\aalmela\Mis Documentos\LTspiceXVII\lib\cmp\standard.jft
+.tran 1
+;ac dec 1000 10e6 200e6
+.backanno
+.end
