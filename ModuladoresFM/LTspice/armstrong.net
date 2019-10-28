@@ -1,28 +1,24 @@
 * Z:\home\aalmela\scm\git\utn\eaiii\2019\ModuladoresFM\LTspice\armstrong.asc
-R1 N004 N007 4.7k
-R2 N005 N004 4.7K
-C1 N005 N004 100nC
-Ca1 N007 N006 10µC
-V1 0 N008 2.5
-V2 NC_01 0 PULSE(0 1 0 1p 1p 1m 2m)
-XU1 N008 N004 N005 Vp Vn LTC2052
+R1 N002 N004 4.7k
+R2 N003 N002 4.7K
+C1 N003 N002 100nC
+Ca1 N004 m 10µC
+V1 0 N005 2.5
+V2 m 0 SINE(0 5 1e3)
+XU1 N005 N002 N003 Vp Vn LTC2052
 V3 Vp 0 5
 V4 0 Vn 5
-L1 vg N005 10µ
-V5 N001 0 SINE(0 0.1 1.9231e+06)
-Ca2 vg N001 10µC
-C2 N002 vg 165.40e-12
-B1 N002 0 I={Idss}*pow(( 1 - (V(vg)/({vc})) ),2)
-L2 N002 0 8.2761e-05
-C3 N002 0 8.0639e-11
-R3 N003 0 10k
-Ca3 N003 N002 10µ
-R4 N005 0 1k
-V6 N006 0 SINE(0 1 1e3) AC 1
-.tran 10m
-;ac dec 1000 10 10e3
-.param Idss = 10e-3
-.param vc = -5
+L1 vg N003 100µ
+V5 c 0 SINE(0 0.1 1.9231e+06)
+Ca2 vg c 100nC
+C2 N001 vg 165.405p
+B1 N001 0 I=10e-3*( 1 - (V(vg)/(-5)) )*( 1 - (V(vg)/(-5)) )
+L2 N001 0 8.2761e-05
+C3 N001 0 8.0639e-11
+R3 o 0 10k
+Ca3 o N001 100n
+R4 N003 0 1k
+.tran 0 10m 8m
 .lib LTC2.LIB
 .backanno
 .end
