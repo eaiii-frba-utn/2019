@@ -1,0 +1,27 @@
+* Z:\home\aalmela\scm\git\utn\eaiii\2019\DetectoresFM\FosterSeeley\LTspice\Foster-Seeley-Simulation.asc
+L1 0 N004 17.6µ
+L3 N005 N001 4.4µ
+C1 N004 0 12.57p
+R0 N002 N006 60k
+C0 N002 N006 .01µ
+D1 N001 N002 D_ideal
+D2 N007 0 D_ideal
+C01 N006 0 .01µ
+C2 N001 N007 13.3p
+R01 N006 0 60k
+L§RFC N005 N006 .1m
+R1 N004 P001 1
+C N004 N005 .001µ
+R2 N001 N007 20k
+L2 N007 N005 4.4µ
+A1 N003 0 0 0 0 0 P001 0 MODULATOR space =10775000 mark =10625000
+V1 N003 0 SINE(.5 0.1 5E3)
+.model D D
+.lib C:\users\aalmela\Mis Documentos\LTspiceXVII\lib\cmp\standard.dio
+.model D_ideal D(Ron=0.1n Roff=1G Vfwd=0.0)
+K2 L1 L3 .3
+K3 L2 L3 .999
+K1 L1 L2 .3
+.tran 0 2m 1m
+.backanno
+.end
