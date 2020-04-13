@@ -1,0 +1,232 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.1'
+      jupytext_version: 1.1.1
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy                  # http://scipy.org/
+from scipy import signal
+
+from IPython.display import Image  
+# %matplotlib inline
+params = {'legend.fontsize': 12,
+          'figure.figsize': (10, 10),
+         'axes.labelsize': 12,
+         'axes.titlesize': 12,
+         'xtick.labelsize':12,
+         'ytick.labelsize':12}
+plt.rcParams.update(params) 
+```
+
+## Máxima transferencia $ Q $ constante.
+
+Se  desea encontrar el valor de RL que maximice la tranferencia de energía desde el generado a la carga, teniendo en cuenta que se emplea un circuito sintonizado LC con perdidas (rp).
+
+Dado que el circuito sintonizado esta compuesto por dos componentes, L y C, para cada valor de RL podriamos proponer que el inductor L se escoja para tener un $Qc$ dado y, luego, se buscará el valor de C que sintonice a $wo$. 
+
+
+
+
+```{python}
+plt.rcParams.update(params) 
+Image(filename= "fig/maxPot.png",width=450) 
+```
+
+<!-- #region -->
+Se busca el valor de $R_L$ para lograr la máxima transferencia de energía desde la fuente para un dado un $ Q_c $.
+
+
+$$ P_{R_L} = \frac{v_L^2}{ R_L} $$
+
+$$ P_{R_L} = \frac{(i_g \cdot \frac{1}{\frac{1}{r_g} + \frac{1}{r_p} + \frac{1}{R_L} })^2}{ R_L} $$
+
+$$ P_{R_L} = \frac{i_g^2}{  R_L \cdot (\frac{1}{r_g} + \frac{1}{r_p} + \frac{1}{R_L})^2 } $$
+
+
+
+<!-- #endregion -->
+
+<!-- #region -->
+$r_p$ se puede escribir en función de $Q_c$ como:
+
+$$ \frac{1}{Q_c} =  \frac{1}{Q_o} + \frac{w_o \cdot L}{R }   $$
+
+$$ w_o \cdot L = R \cdot (\frac{1}{Q_c} -  \frac{1}{Q_o} )   $$
+
+donde $  R = \frac{R_L \cdot r_g }{ R_L + r_g  } $.
+
+$$ Q_o = \frac{r_p}{ w_o \cdot L} $$ 
+
+$$ r_p   = w_o \cdot L \cdot Q_o $$ 
+
+$$ r_p   = R \cdot (\frac{1}{Q_c} -  \frac{1}{Q_o} ) \cdot Q_o $$
+
+$$ r_p   =  \frac{R_L \cdot r_g }{ R_L + r_g  } \cdot (\frac{Q_o}{Q_c} -  1 )  $$
+
+
+Remplazando $rp $ en la ecuación de la potencia $P_{RL}$: 
+
+$$ P_{R_L} = \frac{i_g^2}{  R_L \cdot (\frac{1}{r_g} + \frac{1}{\frac{R_L \cdot r_g }{ R_L + r_g  } \cdot (\frac{Q_o}{Q_c} -  1 ) } + \frac{1}{R_L})^2 } $$
+
+
+$$ P_{R_L} = \frac{i_g^2}{  R_L \cdot (\frac{1}{r_g} + \frac{R_L + r_g  }{R_L \cdot r_g \cdot (\frac{Q_o}{Q_c} -  1 ) } + \frac{1}{R_L})^2 } $$
+
+$$ P_{R_L} = \frac{i_g^2 \cdot R_L^2 \cdot r_g^2 }{  R_L \cdot (r_g + \frac{R_L + r_g  }{ (\frac{Q_o}{Q_c} -  1 ) } + R_L)^2 } $$
+
+$$ P_{R_L} = \frac{i_g^2 \cdot R_L \cdot r_g^2 }{  (r_g + \frac{R_L + r_g  }{ (\frac{Q_o}{Q_c} -  1 ) } + R_L)^2 } $$
+ 
+$$ P_{R_L} = \frac{i_g^2 \cdot R_L \cdot r_g^2 }{ (R_L + r_g)^2 \cdot (1 + \frac{ 1 }{ (\frac{Q_o}{Q_c} -  1 ) } )^2 } $$ 
+
+
+<!-- #endregion -->
+
+<!-- #region -->
+$$ P_{R_L} = \frac{i_g^2 \cdot R_L \cdot r_g^2 }{ (R_L + r_g)^2 \cdot ( \frac{ \frac{Q_o}{Q_c} }{ (\frac{Q_o}{Q_c} -  1 ) } )^2 } $$ 
+
+$$ P_{R_L} = \frac{i_g^2 \cdot R_L \cdot r_g^2 }{ (R_L + r_g)^2 \cdot ( \frac{ Q_o }{ Q_o -  Q_c  } )^2 } $$ 
+
+$$ P_{R_L} = \frac{i_g^2 \cdot R_L }{ (\frac{R_L + r_g}{r_g}  \cdot  \frac{ Q_o }{ Q_o -  Q_c  } )^2 } $$ 
+
+
+$$ P_{R_L} =  \frac{i_g^2}{(\frac{ Q_o }{ Q_o -  Q_c  })^2}   \cdot \frac{ R_L \cdot  r_g^2}{ (R_L + r_g)^2 } $$ 
+
+
+<!-- #endregion -->
+
+<!-- #region -->
+Buscando el máximo valor de $ P_{R_L} $:
+
+$$ \frac{\partial P_{R_L}}{\partial R_L } = \frac{i_g^2}{(\frac{ Q_o }{ Q_o -  Q_c  })^2}   \cdot \frac{[(r_g^2 \cdot (R_L^2 + r_g)^2) - 2 \cdot (R_L +  r_g) \cdot (R_L \cdot  r_g^2)  ]}{(R_L +  r_g)^4} = 0$$
+
+
+$$ (r_g^2 \cdot (R_L + r_g)^2) - 2 \cdot (R_L +  r_g) \cdot (R_L \cdot  r_g^2)   = 0 $$
+
+$$ r_g^2 \cdot (R_L + r_g)^2 = 2 \cdot (R_L +  r_g) \cdot (R_L \cdot  r_g^2)  $$
+
+
+<!-- #endregion -->
+
+$$  (R_L + r_g)  = 2 \cdot R_L   $$
+
+$$ R_L = r_g $$
+
+Entonces :
+
+$$ P_{R_L} =  \frac{i_g^2}{(\frac{ Q_o }{ Q_o -  Q_c  })^2}   \cdot \frac{ r_g \cdot  r_g^2}{ (r_g + r_g)^2 } $$ 
+
+$$ P_{R_L} =  \frac{i_g^2}{(\frac{ Q_o }{ Q_o -  Q_c  })^2}   \cdot \frac{ r_g }{ 4 } $$ 
+
+$$ P_{R_L MAX: (RL =  rg) } =  \frac{i_g^2 \cdot r_g}{4}   \cdot (1 - \frac{ Q_c }{ Q_o })^2 $$ 
+
+
+### Ejemplo 
+Suponer que $R_g = 10 \Omega$, $f_o = 1 MHz$, $Q_0 = 30$  y $Q_c = 10$.
+
+
+```{python}
+rg = 10
+fo = 1e6
+Qo = 100
+Qc = 10
+
+
+```
+
+```{python}
+def PRL(ig, RL, rg, rp, Qc):
+    return ig**2 * (RL * rg**2)/(RL + rg)**2 * (1 - Qc/Qo)**2
+
+
+def PRG(ig, RL, rg, rp):
+    return ig**2 / rg / (1/RL +1/rg + 1/rp )**2
+
+def PRP(ig, RL, rg, rp):
+    p =  ig**2 / rp / (1/RL +1/rg + 1/rp )**2
+    return p 
+
+rl = np.arange(1,20,1)
+
+prl  = list()
+prp  = list()
+prg  = list()
+pt   = list()
+for r in rl:
+    prl.append( PRL(1, r, rg, Qo, Qc) )
+    
+    
+    wL = (1/Qc - 1/Qo) * (r * rg)/(r + rg)
+    prp.append(PRP(1, r, rg, (Qo * wL) ) )
+    
+    prg.append(PRG(1, r, rg, (Qo * wL) ) )
+    pt.append(prl[-1] + prp[-1])
+    
+plt.plot(rl, prl / max(pt), 'b',label = 'PRL')    
+plt.plot(rl, prp / max(pt), 'y',label = 'Prp')    
+plt.plot(rl, pt / max(pt), 'g',label = 'Pentregada')
+plt.xlabel('RL')
+plt.ylabel('P(RL)/max(Pt)')
+plt.title('Buscamos Qc={:1.0f}. Valor de rg={:1.1f}ohms, Qo={:1.0f} y RL variando. El eje de abscisas es RL. '.format(Qc,rg,Qo))
+plt.grid()
+plt.legend()
+
+# Condición de MAXIMA TRANSFERENCIA DE POTENCIA A Q constante
+# Para la maxima potencia a Qcte, (Q=10)
+rl = rg
+# Calculo wL
+wL = (1/Qc - 1/Qo) * (rl * rg)/(rl + rg)
+# dado que esta defindo Qo calculo la perdida:
+# Qo = rp/wL
+rp = Qo * wL
+Zin = rl * rp /(rl + rp)
+Prl = PRL(1, rl, rg, Qo, Qc) 
+# Marco en el grafico
+plt.plot(rl, Prl / max(pt), 'or')    
+plt.annotate(s='PRLMAX(Zin={:1.1f})'.format(Zin),xy=(rl,Prl*1.02/ max(pt)), xycoords='data',fontsize=12.0,textcoords='data',ha='center')
+plt.annotate(s='PRLMAX(RL={:1.1f})'.format(rl),xy=(rl,Prl*0.94/ max(pt)), xycoords='data',fontsize=12.0,textcoords='data',ha='center')
+plt.annotate(s='PRLMAX(rp={:1.1f})'.format(rp),xy=(rl,Prl*0.90/ max(pt)), xycoords='data',fontsize=12.0,textcoords='data',ha='center')
+
+
+# Condición de MAXIMA TRANSFERENCIA DE POTENCIA 
+Zin = rg
+# Para el calculo de wl usamos la resistencia total 
+# Calculo wL
+rt = (rg * Zin)/(rg + Zin)
+wL = (1/Qc) * rt
+
+# dado que esta defindo Qo calculo la perdida:
+# Qo = rp/wL
+rp = Qo * wL
+#1/rl = (1/Zin) - (1/rp) 
+rl = 1/( (1/Zin) - (1/rp))
+
+Prl = PRL(1, rl, rg, Qo, Qc) / max(pt)
+# Marco en el grafico
+plt.annotate(s='Pdisp(Zin={:1.1f})'.format(Zin),xy=(rl,1.02), xycoords='data',fontsize=12.0,textcoords='data',ha='center')
+plt.annotate(s='Pdisp(RL={:1.1f})'.format(rl),xy=(rl,0.97), xycoords='data',fontsize=12.0,textcoords='data',ha='center')
+plt.annotate(s='Pdisp(rp={:1.1f})'.format(rp),xy=(rl,0.94), xycoords='data',fontsize=12.0,textcoords='data',ha='center')
+
+
+plt.show()
+    
+
+```
+
+# La potencia máxima en la carga para un Qc dado, se obtiene cuando RL es igual a rg. 
+
+# La potencia máxima entregada a por la fuente (Pdisp) es cuando Rin del adaptador cargado es igual a rg.
+
+
+```{python}
+
+```
